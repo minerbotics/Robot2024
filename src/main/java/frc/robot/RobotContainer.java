@@ -7,6 +7,9 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.subsystems.Swerve;
+
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -67,6 +70,12 @@ public class RobotContainer {
   private void configureBindings() {
     
     m_driverController.start().onTrue(new InstantCommand(() -> m_swerve.zeroGyroscope()));
+
+    m_driverController.povUp().whileTrue(new DefaultDriveCommand(m_swerve, () -> 0.5, () -> 0.0, () -> 0.0));
+    m_driverController.povDown().whileTrue(new DefaultDriveCommand(m_swerve, () -> -0.5, () -> 0.0, () -> 0.0));
+    m_driverController.povLeft().whileTrue(new DefaultDriveCommand(m_swerve, () -> 0.0, () -> 0.5, () -> 0.0));
+    m_driverController.povRight().whileTrue(new DefaultDriveCommand(m_swerve, () -> 0.0, () -> -0.5, () -> 0.0));
+
 
   }
 

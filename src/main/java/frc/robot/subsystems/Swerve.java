@@ -14,13 +14,16 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 import static frc.robot.Constants.*;
 
 public class Swerve extends SubsystemBase {
-    
+  ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
   /** 
    * The maximum voltage that will be delivered to the drive motors.
    * <p>
@@ -87,6 +90,7 @@ public class Swerve extends SubsystemBase {
     swerveConfig.setSteerCurrentLimit(steerLimit);
 
     m_frontLeftModule = new MkSwerveModuleBuilder(swerveConfig)
+      .withLayout(tab.getLayout("Front left module", BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0))
       .withGearRatio(SdsModuleConfigurations.MK4_L2)
       .withDriveMotor(MotorType.NEO, FRONT_LEFT_MODULE_DRIVE_MOTOR)
       .withSteerMotor(MotorType.NEO, FRONT_LEFT_MODULE_STEER_MOTOR)
@@ -95,6 +99,7 @@ public class Swerve extends SubsystemBase {
       .build();
 
     m_frontRightModule = new MkSwerveModuleBuilder(swerveConfig)
+      .withLayout(tab.getLayout("Front right module", BuiltInLayouts.kList).withSize(2, 4).withPosition(2, 0))
       .withGearRatio(SdsModuleConfigurations.MK4_L2)
       .withDriveMotor(MotorType.NEO, FRONT_RIGHT_MODULE_DRIVE_MOTOR)
       .withSteerMotor(MotorType.NEO, FRONT_RIGHT_MODULE_STEER_MOTOR)
@@ -103,6 +108,7 @@ public class Swerve extends SubsystemBase {
       .build();
 
     m_backLeftModule = new MkSwerveModuleBuilder(swerveConfig)
+      .withLayout(tab.getLayout("Back left module", BuiltInLayouts.kList).withSize(2, 4).withPosition(4, 0))
       .withGearRatio(SdsModuleConfigurations.MK4_L2)
       .withDriveMotor(MotorType.NEO, BACK_LEFT_MODULE_DRIVE_MOTOR)
       .withSteerMotor(MotorType.NEO, BACK_LEFT_MODULE_STEER_MOTOR)
@@ -111,6 +117,7 @@ public class Swerve extends SubsystemBase {
       .build();
 
     m_backRightModule = new MkSwerveModuleBuilder(swerveConfig)
+      .withLayout(tab.getLayout("Back right module", BuiltInLayouts.kList).withSize(2, 4).withPosition(6, 0))
       .withGearRatio(SdsModuleConfigurations.MK4_L2)
       .withDriveMotor(MotorType.NEO, BACK_RIGHT_MODULE_DRIVE_MOTOR)
       .withSteerMotor(MotorType.NEO, BACK_RIGHT_MODULE_STEER_MOTOR)

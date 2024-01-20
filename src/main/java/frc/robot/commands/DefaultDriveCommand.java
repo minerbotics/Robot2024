@@ -30,9 +30,9 @@ public class DefaultDriveCommand extends Command {
         // You can use `new ChassisSpeeds(...)` for robot-oriented movement instead of field-oriented movement
         m_swerve.drive(
                 ChassisSpeeds.fromFieldRelativeSpeeds(
-                        m_translationXSupplier.getAsDouble(),
-                        m_translationYSupplier.getAsDouble(),
-                        m_rotationSupplier.getAsDouble(),
+                        -m_translationXSupplier.getAsDouble(),
+                        -m_translationYSupplier.getAsDouble(),
+                        -m_rotationSupplier.getAsDouble(),
                         m_swerve.getGyroscopeRotation()
                 )
         );
