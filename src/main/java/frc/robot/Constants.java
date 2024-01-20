@@ -13,7 +13,46 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+  /**
+   * The left-to-right distance between the drivetrain wheels
+   *
+   * Should be measured from center to center.
+   */
+  public static final double DRIVETRAIN_TRACKWIDTH_METERS = .4572;
+  /**
+   * The front-to-back distance between the drivetrain wheels.
+   *
+   * Should be measured from center to center.
+   */
+  public static final double DRIVETRAIN_WHEELBASE_METERS = .600075;
+
+  public static final int FRONT_LEFT_MODULE_DRIVE_MOTOR = 5;
+  public static final int FRONT_LEFT_MODULE_STEER_MOTOR = 6;
+  public static final int FRONT_LEFT_MODULE_STEER_ENCODER = 9;
+  public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(52.21);
+
+  public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 1;
+  public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 2;
+  public static final int FRONT_RIGHT_MODULE_STEER_ENCODER = 11;
+  public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(129.46);
+
+  public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 7;
+  public static final int BACK_LEFT_MODULE_STEER_MOTOR = 8;
+  public static final int BACK_LEFT_MODULE_STEER_ENCODER = 10;
+  public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(173.93);
+
+  public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 3;
+  public static final int BACK_RIGHT_MODULE_STEER_MOTOR = 4;
+  public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 12;
+  public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(8.87);
+
+  public static final double TRANSLATION_SLEW = 1.55;
+  public static final double ROTATION_SLEW = 3.00;
+
+  public static final int PCM_ID = 0;
+
   public static class OperatorConstants {
-    public static final int kDriverControllerPort = 0;
+    public static final int DRIVER_CONTROLLER_PORT = 0;
   }
 }
