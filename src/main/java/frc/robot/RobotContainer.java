@@ -71,10 +71,10 @@ public class RobotContainer {
     
     m_driverController.start().onTrue(new InstantCommand(() -> m_swerve.zeroGyroscope()));
 
-    m_driverController.povUp().whileTrue(new DefaultDriveCommand(m_swerve, () -> 0.5, () -> 0.0, () -> 0.0));
-    m_driverController.povDown().whileTrue(new DefaultDriveCommand(m_swerve, () -> -0.5, () -> 0.0, () -> 0.0));
-    m_driverController.povLeft().whileTrue(new DefaultDriveCommand(m_swerve, () -> 0.0, () -> 0.5, () -> 0.0));
-    m_driverController.povRight().whileTrue(new DefaultDriveCommand(m_swerve, () -> 0.0, () -> -0.5, () -> 0.0));
+    m_driverController.povUp().whileTrue(new DefaultDriveCommand(m_swerve, () -> 0.5, () -> 0.0, () -> 0.0, true));
+    m_driverController.povDown().whileTrue(new DefaultDriveCommand(m_swerve, () -> -0.5, () -> 0.0, () -> 0.0, true));
+    m_driverController.povLeft().whileTrue(new DefaultDriveCommand(m_swerve, () -> 0.0, () -> 0.5, () -> 0.0, true));
+    m_driverController.povRight().whileTrue(new DefaultDriveCommand(m_swerve, () -> 0.0, () -> -0.5, () -> 0.0, true));
 
 
   }

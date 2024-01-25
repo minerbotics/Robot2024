@@ -6,7 +6,7 @@ import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
 import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.SwerveModule;
-
+import com.ctre.phoenix6.hardware.Pigeon2;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -67,7 +67,8 @@ public class Swerve extends SubsystemBase {
           new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0)
   );
 
-  private final AHRS m_navx = new AHRS(SPI.Port.kMXP, (byte) 200); // NavX connected over MXP
+  //private final AHRS m_navx = new AHRS(SPI.Port.kMXP, (byte) 200); // NavX connected over MXP
+  private final Pigeon2 pigeon2;
 
   private final SwerveModule m_frontLeftModule;
   private final SwerveModule m_frontRightModule;
@@ -84,6 +85,7 @@ public class Swerve extends SubsystemBase {
   private final SlewRateLimiter m_slewRot;
 
   public Swerve() {
+   pigeon2 = new Pigeon2(PIGEON_ID);
 
     swerveConfig = MkModuleConfiguration.getDefaultSteerNEO();
     swerveConfig.setDriveCurrentLimit(driveLimit);
@@ -135,26 +137,19 @@ public class Swerve extends SubsystemBase {
    * 'forwards' direction.
    */
   public void zeroGyroscope() {
-    m_navx.zeroYaw();
+    pigeon2.reset();
   }
 
   public double getPitchAngleDegrees() {
-        return m_navx.getPitch();
+        return pigeon2.getPitch().getValueAsDouble();
   }
 
   public double getRollAngleDegrees() {
-        return m_navx.getRoll();
+        return pigeon2.getRoll().getValueAsDouble();
   }
 
   public Rotation2d getGyroscopeRotation() {
-
-    if (m_navx.isMagnetometerCalibrated()) {
-      // We will only get valid fused headings if the magnetometer is calibrated
-      return Rotation2d.fromDegrees(m_navx.getFusedHeading());
-    }
-
-    // We have to invert the angle of the NavX so that rotating the robot counter-clockwise makes the angle increase.
-    return Rotation2d.fromDegrees(360.0 - m_navx.getYaw());
+    return pigeon2.getRotation2d();
   }
 
   public void drive(ChassisSpeeds chassisSpeeds) {

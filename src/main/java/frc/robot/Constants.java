@@ -14,6 +14,7 @@ package frc.robot;
  */
 public final class Constants {
 
+  public static final int PIGEON_ID = 20;
   /**
    * The left-to-right distance between the drivetrain wheels
    *
