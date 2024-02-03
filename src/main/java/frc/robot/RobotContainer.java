@@ -5,11 +5,14 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.CenterOnTag;
 import frc.robot.commands.DefaultDriveCommand;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Swerve;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -25,7 +28,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   // Subsystems
   private final Swerve m_swerve;
-
+  private final Limelight m_Limelight;
   // Commands
 
 
@@ -37,6 +40,8 @@ public class RobotContainer {
   public RobotContainer() {
     // Subsystems
     m_swerve = new Swerve();
+    m_Limelight = new Limelight();
+    
 
     // Controllers
     m_driverController = new CommandXboxController(OperatorConstants.DRIVER_CONTROLLER_PORT);
@@ -53,7 +58,7 @@ public class RobotContainer {
             () -> -modifyAxis(m_driverController.getLeftX()) * Swerve.MAX_VELOCITY_METERS_PER_SECOND,
             () -> -modifyAxis(m_driverController.getRightX()) * Swerve.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
     ));
-    
+    SmartDashboard.updateValues();
     // Configure the trigger bindings
     configureBindings();
   }
@@ -76,6 +81,7 @@ public class RobotContainer {
     m_driverController.povLeft().whileTrue(new DefaultDriveCommand(m_swerve, () -> 0.0, () -> 0.5, () -> 0.0, true));
     m_driverController.povRight().whileTrue(new DefaultDriveCommand(m_swerve, () -> 0.0, () -> -0.5, () -> 0.0, true));
 
+    m_driverController.a().whileTrue(new CenterOnTag(m_Limelight, m_swerve));
 
   }
 
