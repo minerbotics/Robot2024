@@ -21,34 +21,23 @@ public class CenterOnTag extends Command {
     public void execute() {
         double tx = m_Limelight.getTX();
         double ta = m_Limelight.getTA();
-        //System.out.println(tx);
-        if (tx > 4) {
-            if (ta > 3) {
-                m_Swerve.drive(new ChassisSpeeds(0.5, 0.5, 0));
-            } else if (ta < 2) {
-               m_Swerve.drive(new ChassisSpeeds(-0.5, 0.5, 0));
-               System.out.println("test12");
-            } else {
-                m_Swerve.drive(new ChassisSpeeds(0, 0.5, 0));
-            }
-        } else if (tx < -4) {
-            if (ta > 3) {
-                m_Swerve.drive(new ChassisSpeeds(0.5, -0.5, 0));
-            } else if (ta < 2) {
-                m_Swerve.drive(new ChassisSpeeds(-0.5, -0.5, 0));
-                System.out.println("test11");
-            } else {
-                m_Swerve.drive(new ChassisSpeeds(0, -0.5, 0));
-            }
-        } else if (ta > 3) {
-            m_Swerve.drive(new ChassisSpeeds(0.5, 0, 0));
-        } else if (ta < 2) {
-               m_Swerve.drive(new ChassisSpeeds(-0.5, 0, 0));
-        }
         
-        else {
-            m_Swerve.drive(new ChassisSpeeds(0, 0, 0));
+        double vx = 0.0;
+        double vy = 0.0;
+        double omega = 0.0;
+
+        if (tx > 4) {
+            vy = 0.5;
+        } else if (tx < -4) {
+            vy = -0.5;
         }
 
+        if (ta > 3) {
+            vx = 0.5;
+        } else if (ta < 2) {
+            vx = -0.5;
+        }
+
+        m_Swerve.drive(new ChassisSpeeds(vx, vy, omega));
     }
 }
