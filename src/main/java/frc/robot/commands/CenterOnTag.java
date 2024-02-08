@@ -13,6 +13,7 @@ public class CenterOnTag extends Command {
 
     public CenterOnTag(Limelight limelight, Swerve swerve) {
         m_Limelight = limelight;
+        
         m_Swerve = swerve;
         addRequirements(limelight, swerve);
     }
@@ -21,21 +22,27 @@ public class CenterOnTag extends Command {
     public void execute() {
         double tx = m_Limelight.getTX();
         double ta = m_Limelight.getTA();
-        
+        double tv = m_Limelight.getTV();
+
         double vx = 0.0;
         double vy = 0.0;
         double omega = 0.0;
 
-        if (tx > 4) {
-            vy = 0.5;
-        } else if (tx < -4) {
-            vy = -0.5;
+        if (tv < 1.0) {
+            m_Swerve.drive(new ChassisSpeeds(vx, vy, omega));
+            return;
         }
 
-        if (ta > 3) {
-            vx = 0.5;
-        } else if (ta < 2) {
-            vx = -0.5;
+        if (tx > 4 || tx < -4) {
+            vy = tx * 0.05;
+        } else {
+            vy = 0;
+        }
+
+        if (ta > 3 || ta < 2) {
+            vx = (ta-2.5)*0.5;
+        } else {
+            vx = 0;
         }
 
         m_Swerve.drive(new ChassisSpeeds(vx, vy, omega));
