@@ -89,6 +89,5 @@ public final class Constants {
     public static final int SOURCE_3 = 5;
     public static final int TRAP = 6; 
   }
-
   
 }

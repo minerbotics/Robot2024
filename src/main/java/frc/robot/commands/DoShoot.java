@@ -38,10 +38,15 @@ public class DoShoot extends Command {
   public void execute() {
     switch(m_goalType){
       case GoalTypeConstants.AMP:
+        m_shooter.ampOut();
+        m_intake.out();
         break;
       case GoalTypeConstants.SPEAKER:
+        m_shooter.speakerOut();
         break;
       case GoalTypeConstants.TRAP:
+        m_shooter.ampOut();
+        m_intake.out();
         break;
     }
 
