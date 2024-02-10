@@ -80,4 +80,15 @@ public final class Constants {
     public static final int RIGHT_CLIMB_DOWN_CHANNEL = 4;
 
   }
+
+  public static class GoalTypeConstants {
+    public static final int AMP = 1;
+    public static final int SPEAKER = 2;
+    public static final int SOURCE_1 = 3;
+    public static final int SOURCE_2 = 4;
+    public static final int SOURCE_3 = 5;
+    public static final int TRAP = 6; 
+  }
+
+  
 }
