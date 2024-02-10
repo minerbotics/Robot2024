@@ -55,5 +55,29 @@ public final class Constants {
 
   public static class OperatorConstants {
     public static final int DRIVER_CONTROLLER_PORT = 0;
+    public static final int OPERATOR_CONTROLLER_PORT = 1;
+  }
+
+  public static class ShooterConstants {
+    public static final int TOP_SHOOTER_MOTOR = 20;
+    public static final int MID_SHOOTER_MOTOR = 21;
+    public static final int BOTTOM_SHOOTER_MOTOR = 22;
+  }
+
+  public static class IntakeConstants {
+    public static final int INTAKE_MOTOR = 23;
+  }
+
+  public static class SwingConstants {
+    public static final int LEFT_SWING_MOTOR = 24;
+    public static final int RIGHT_SWING_MOTOR = 25;
+  }
+
+  public static class ClimberConstants {
+    public static final int LEFT_CLIMB_UP_CHANNEL = 1;    
+    public static final int LEFT_CLIMB_DOWN_CHANNEL = 2;
+    public static final int RIGHT_CLIMB_UP_CHANNEL = 3;
+    public static final int RIGHT_CLIMB_DOWN_CHANNEL = 4;
+
   }
 }
