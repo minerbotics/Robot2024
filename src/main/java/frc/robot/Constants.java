@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.util.PIDConstants;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -27,6 +29,8 @@ public final class Constants {
    * Should be measured from center to center.
    */
   public static final double DRIVETRAIN_WHEELBASE_METERS = .600075;
+
+  public static final double DRIVETRAIN_WHEELBASE_RADIUS = Math.sqrt(Math.pow(DRIVETRAIN_TRACKWIDTH_METERS, 2) + Math.pow(DRIVETRAIN_TRACKWIDTH_METERS, 2)) / 2;
 
   public static final int FRONT_LEFT_MODULE_DRIVE_MOTOR = 5;
   public static final int FRONT_LEFT_MODULE_STEER_MOTOR = 6;
@@ -93,6 +97,11 @@ public final class Constants {
     public static final int SOURCE_2 = 4;
     public static final int SOURCE_3 = 5;
     public static final int TRAP = 6; 
+  }
+
+  public static class AutoConstants {
+    public static final PIDConstants TRANSLATION_AUTO_PID = new PIDConstants(1.95, 0, .0001);
+    public static final PIDConstants ROTATION_AUTO_PID = new PIDConstants(20, 0, 0);
   }
   
 }

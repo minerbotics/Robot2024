@@ -6,12 +6,21 @@ import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.ReplanningConfig;
+
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -19,6 +28,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 import static frc.robot.Constants.*;
+
+import java.util.Optional;
 
 public class Swerve extends SubsystemBase {
   ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
@@ -82,8 +93,11 @@ public class Swerve extends SubsystemBase {
   private final SlewRateLimiter m_slewY;
   private final SlewRateLimiter m_slewRot;
 
+  private final SwerveDrivePoseEstimator m_PoseEstimator;
+  private final Pose2d m_StartingPose;
+
   public Swerve() {
-   pigeon2 = new Pigeon2(PIGEON_ID);
+    pigeon2 = new Pigeon2(PIGEON_ID);
 
     swerveConfig = MkModuleConfiguration.getDefaultSteerNEO();
     swerveConfig.setDriveCurrentLimit(driveLimit);
@@ -128,6 +142,35 @@ public class Swerve extends SubsystemBase {
     m_slewX = new SlewRateLimiter(Constants.TRANSLATION_SLEW);
     m_slewY = new SlewRateLimiter(Constants.TRANSLATION_SLEW);
     m_slewRot = new SlewRateLimiter(Constants.ROTATION_SLEW);
+
+    m_StartingPose = new Pose2d(0, 0, new Rotation2d(0));
+    m_PoseEstimator = new SwerveDrivePoseEstimator(m_kinematics, getGyroscopeRotation(), getModulePositions(), m_StartingPose);
+
+    AutoBuilder.configureHolonomic(
+                m_PoseEstimator::getEstimatedPosition, // Robot pose supplier
+                this::setPose, // Method to reset odometry (will be called if your auto has a starting pose)
+                this::getChassisSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+                this::drive, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+                new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+                        AutoConstants.TRANSLATION_AUTO_PID, // Translation PID constants
+                        AutoConstants.ROTATION_AUTO_PID, // Rotation PID constants
+                        MAX_VELOCITY_METERS_PER_SECOND , // Max module speed, in m/s
+                        DRIVETRAIN_WHEELBASE_RADIUS, // Drive base radius in meters. Distance from robot center to furthest module.
+                        new ReplanningConfig(true, false) // Default path replanning config. See the API for the options here
+                ),
+                () -> {
+                    // Boolean supplier that controls when the path will be mirrored for the red alliance
+                    // This will flip the path being followed to the red side of the field.
+                    // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+                    Optional<Alliance> alliance = DriverStation.getAlliance();
+                    if (alliance.isPresent()) {
+                        return alliance.get() == DriverStation.Alliance.Red;
+                    }
+                    return false;
+                },
+                this // Reference to this subsystem to set requirements
+        );
   }
 
   /**
@@ -168,6 +211,34 @@ public class Swerve extends SubsystemBase {
     m_backLeftModule.set(states[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[2].angle.getRadians());
     m_backRightModule.set(states[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[3].angle.getRadians());
 
+  }
+
+  public SwerveModulePosition[] getModulePositions() {
+    SwerveModulePosition[] positions = {
+      m_frontLeftModule.getPosition(),
+      m_frontRightModule.getPosition(),
+      m_backLeftModule.getPosition(),
+      m_backRightModule.getPosition()
+    };
+    return positions;
+  }
+
+  public void setPose(Pose2d pose) {
+    m_PoseEstimator.resetPosition(getGyroscopeRotation(), getModulePositions(), pose);
+  }
+
+  public ChassisSpeeds getChassisSpeeds() {
+    return m_kinematics.toChassisSpeeds(getModuleStates());
+  }
+
+  private SwerveModuleState[] getModuleStates() {
+    SwerveModuleState[] swerveModuleStates = {
+      m_frontLeftModule.getState(),
+      m_frontRightModule.getState(),
+      m_backLeftModule.getState(),
+      m_backRightModule.getState()
+    };
+    return swerveModuleStates;
   }
 
 }
