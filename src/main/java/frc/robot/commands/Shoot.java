@@ -34,7 +34,12 @@ public class Shoot extends Command {
       new SwingToPosition(m_Swinger, m_goalType)
         .andThen(new DoShoot(m_Intake, m_Shooter, m_goalType));
     }
-    
+  }
+
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {
+    m_Swinger.swingToPosition(0);
   }
 
   // Returns true when the command should end.
