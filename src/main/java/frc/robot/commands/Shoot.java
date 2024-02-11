@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import frc.robot.Constants.GoalTypeConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Swerve;
@@ -25,9 +26,15 @@ public class Shoot extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    new ManeuverOn(m_Swerve, m_goalType)
-      .andThen(new SwingToPosition(m_Swinger, m_goalType))
-      .andThen(new DoShoot(m_Intake, m_Shooter, m_goalType));
+    if (m_goalType != GoalTypeConstants.TRAP) {
+      new ManeuverOn(m_Swerve, m_goalType)
+        .andThen(new SwingToPosition(m_Swinger, m_goalType))
+        .andThen(new DoShoot(m_Intake, m_Shooter, m_goalType));
+    } else {
+      new SwingToPosition(m_Swinger, m_goalType)
+        .andThen(new DoShoot(m_Intake, m_Shooter, m_goalType));
+    }
+    
   }
 
   // Returns true when the command should end.

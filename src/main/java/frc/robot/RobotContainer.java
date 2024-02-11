@@ -6,11 +6,12 @@ package frc.robot;
 
 import frc.robot.Constants.GoalTypeConstants;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.ClimberUp;
+import frc.robot.commands.ClimberDown;
 import frc.robot.commands.ClimberUp;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.Intake;
 import frc.robot.commands.Shoot;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Swerve;
@@ -95,7 +96,9 @@ public class RobotContainer {
     m_driverController.povRight()
       .whileTrue(new DefaultDriveCommand(m_Swerve, () -> 0.0, () -> -0.5, () -> 0.0, true));
     m_driverController.y()
-      .onTrue(new ClimberUp());
+      .onTrue(new ClimberUp(m_Climber));
+    m_driverController.a()
+      .onTrue(new ClimberDown(m_Climber));
 
     m_OperatorController.y()
       .whileTrue(new Shoot(m_Swerve, m_Shooter, m_IntakeSubsystem, m_Swinger, GoalTypeConstants.SPEAKER));
