@@ -53,10 +53,15 @@ public class Swinger extends SubsystemBase {
   }
 
   public void swingToPosition(double position) {
-    m_PidController.setReference(position, ControlType.kPosition);
+    double rotations = degreesToRotation(position);
+    m_PidController.setReference(rotations, ControlType.kPosition);
   }
 
   public double getPosition() {
     return m_Encoder.getPosition();
+  }
+
+  private double degreesToRotation(double degrees) {
+    return (degrees / 360);
   }
 }
