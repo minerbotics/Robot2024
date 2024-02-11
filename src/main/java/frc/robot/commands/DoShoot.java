@@ -33,10 +33,12 @@ public class DoShoot extends Command {
         m_shooter.ampOut();
         m_intake.out();
         break;
+      default:
+        break;
     }
 
   }
-  
+
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {

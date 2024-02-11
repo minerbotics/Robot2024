@@ -4,9 +4,17 @@
 
 package frc.robot;
 
+import frc.robot.Constants.GoalTypeConstants;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.ClimberUp;
+import frc.robot.commands.ClimberUp;
 import frc.robot.commands.DefaultDriveCommand;
+import frc.robot.commands.Intake;
+import frc.robot.commands.Shoot;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Swerve;
+import frc.robot.subsystems.Swinger;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -22,22 +30,30 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   // Subsystems
-  private final Swerve m_swerve;
+  private final Swerve m_Swerve;
+  private final Climber m_Climber;
+  private final IntakeSubsystem m_IntakeSubsystem;
+  private final Shooter m_Shooter;
+  private final Swinger m_Swinger;
   // Commands
 
 
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController;
+  private final CommandXboxController m_OperatorController;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Subsystems
-    m_swerve = new Swerve();
-    
+    m_Swerve = new Swerve();
+    m_Climber = new Climber();
+    m_IntakeSubsystem = new IntakeSubsystem();
+    m_Shooter = new Shooter();
+    m_Swinger = new Swinger();
 
     // Controllers
     m_driverController = new CommandXboxController(OperatorConstants.DRIVER_CONTROLLER_PORT);
+    m_OperatorController = new CommandXboxController(OperatorConstants.OPERATOR_CONTROLLER_PORT);
 
     // Commands
     
@@ -45,8 +61,8 @@ public class RobotContainer {
     // Left stick Y axis -> forward and backwards movement
     // Left stick X axis -> left and right movement
     // Right stick X axis -> rotation
-    m_swerve.setDefaultCommand(new DefaultDriveCommand(
-            m_swerve,
+    m_Swerve.setDefaultCommand(new DefaultDriveCommand(
+            m_Swerve,
             () -> -modifyAxis(m_driverController.getLeftY()) * Swerve.MAX_VELOCITY_METERS_PER_SECOND,
             () -> -modifyAxis(m_driverController.getLeftX()) * Swerve.MAX_VELOCITY_METERS_PER_SECOND,
             () -> -modifyAxis(m_driverController.getRightX()) * Swerve.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
@@ -67,14 +83,32 @@ public class RobotContainer {
    */
   private void configureBindings() {
     
-    m_driverController.start().onTrue(new InstantCommand(() -> m_swerve.zeroGyroscope()));
+    m_driverController.start()
+      .onTrue(new InstantCommand(() -> m_Swerve.zeroGyroscope()));
 
-    m_driverController.povUp().whileTrue(new DefaultDriveCommand(m_swerve, () -> 0.5, () -> 0.0, () -> 0.0, true));
-    m_driverController.povDown().whileTrue(new DefaultDriveCommand(m_swerve, () -> -0.5, () -> 0.0, () -> 0.0, true));
-    m_driverController.povLeft().whileTrue(new DefaultDriveCommand(m_swerve, () -> 0.0, () -> 0.5, () -> 0.0, true));
-    m_driverController.povRight().whileTrue(new DefaultDriveCommand(m_swerve, () -> 0.0, () -> -0.5, () -> 0.0, true));
+    m_driverController.povUp()
+      .whileTrue(new DefaultDriveCommand(m_Swerve, () -> 0.5, () -> 0.0, () -> 0.0, true));
+    m_driverController.povDown()
+      .whileTrue(new DefaultDriveCommand(m_Swerve, () -> -0.5, () -> 0.0, () -> 0.0, true));
+    m_driverController.povLeft()
+      .whileTrue(new DefaultDriveCommand(m_Swerve, () -> 0.0, () -> 0.5, () -> 0.0, true));
+    m_driverController.povRight()
+      .whileTrue(new DefaultDriveCommand(m_Swerve, () -> 0.0, () -> -0.5, () -> 0.0, true));
+    m_driverController.y()
+      .onTrue(new ClimberUp());
 
-    //m_driverController.a().whileTrue(new CenterOnTag(m_Limelight, m_swerve));
+    m_OperatorController.y()
+      .whileTrue(new Shoot(m_Swerve, m_Shooter, m_IntakeSubsystem, m_Swinger, GoalTypeConstants.SPEAKER));
+    m_OperatorController.a()
+      .whileTrue(new Shoot(m_Swerve, m_Shooter, m_IntakeSubsystem, m_Swinger, GoalTypeConstants.AMP));
+    m_OperatorController.leftBumper()
+      .whileTrue(new Intake(m_Swerve, m_IntakeSubsystem, m_Shooter, m_Swinger, GoalTypeConstants.SOURCE_1));
+    m_OperatorController.leftBumper()
+      .and(m_OperatorController.rightBumper())
+      .whileTrue(new Intake(m_Swerve, m_IntakeSubsystem, m_Shooter, m_Swinger, GoalTypeConstants.SOURCE_2));
+    m_OperatorController.leftBumper()
+      .whileTrue(new Intake(m_Swerve, m_IntakeSubsystem, m_Shooter, m_Swinger, GoalTypeConstants.SOURCE_3));
+    
 
   }
 

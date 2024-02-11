@@ -7,7 +7,6 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class ManeuverOn extends Command {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Swerve m_Swerve;
   private final Limelight m_Limelight;
   private final int m_goalType;
@@ -15,13 +14,13 @@ public class ManeuverOn extends Command {
   private double txMin, txMax, taMin, taMax;
   private boolean m_isInPosition;
 
-  public ManeuverOn(Swerve swerve, Limelight limelight, int goalType) {
+  public ManeuverOn(Swerve swerve, int goalType) {
     m_Swerve = swerve;
-    m_Limelight = limelight;
+    m_Limelight = new Limelight();
     m_goalType = goalType; 
     m_isInPosition = false;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(swerve, limelight);
+    addRequirements(swerve);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

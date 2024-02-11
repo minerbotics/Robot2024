@@ -71,6 +71,10 @@ public final class Constants {
   public static class SwingConstants {
     public static final int LEFT_SWING_MOTOR = 24;
     public static final int RIGHT_SWING_MOTOR = 25;
+    public static final double AMP_POSITION = 2;
+    public static final double SPEAKER_POSITION = -2;
+    public static final double SOURCE_POSITION = 6;
+    public static final double TRAP_POSITION = 6;
   }
 
   public static class ClimberConstants {

@@ -1,7 +1,6 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.Swinger;
@@ -12,23 +11,21 @@ public class Shoot extends Command {
   private final Shooter m_Shooter;
   private final IntakeSubsystem m_Intake;
   private final Swinger m_Swinger;
-  private final Limelight m_Limelight;
   private final int m_goalType;
 
-  public Shoot(Swerve swerve, Shooter shooter, IntakeSubsystem intake, Swinger swinger, Limelight limelight, int goalType) {
+  public Shoot(Swerve swerve, Shooter shooter, IntakeSubsystem intake, Swinger swinger, int goalType) {
     m_Swerve = swerve;
     m_Shooter = shooter;
     m_Intake = intake;
     m_Swinger = swinger;
-    m_Limelight = limelight;
     m_goalType = goalType;
-    addRequirements(swerve, shooter, intake, limelight);
+    addRequirements(swerve, shooter, intake, swinger);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    new ManeuverOn(m_Swerve, m_Limelight, m_goalType)
+    new ManeuverOn(m_Swerve, m_goalType)
       .andThen(new SwingToPosition(m_Swinger, m_goalType))
       .andThen(new DoShoot(m_Intake, m_Shooter, m_goalType));
   }

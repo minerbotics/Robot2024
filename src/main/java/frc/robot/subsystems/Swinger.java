@@ -6,6 +6,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.SwingConstants;
 
@@ -43,8 +44,16 @@ public class Swinger extends SubsystemBase {
     m_PidController.setOutputRange(kMinOutput, kMaxOutput);
   }
 
+  @Override
+  public void periodic() {
+    SmartDashboard.putNumber("Swinger Position", m_Encoder.getPosition());
+  }
 
   public void swingToPosition(double position) {
     m_PidController.setReference(position, ControlType.kPosition);
+  }
+
+  public double getPosition() {
+    return m_Encoder.getPosition();
   }
 }
