@@ -26,6 +26,9 @@ public class Swinger extends SubsystemBase {
     m_PidController = m_LeftSwingMotor.getPIDController();
     m_Encoder = m_LeftSwingMotor.getEncoder();
 
+    m_LeftSwingMotor.restoreFactoryDefaults();
+    m_RightSwingMotor.restoreFactoryDefaults();
+
     // PID coefficients
     kP = 0.1;
     kI = 1e-4;

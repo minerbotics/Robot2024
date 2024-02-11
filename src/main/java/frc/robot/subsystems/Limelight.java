@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Limelight extends SubsystemBase {
     private NetworkTable m_limelightTable;
-    private double ty, tx, ta, tv, ts;
+    private double ty, tx, ta, tv, ts, tid;
 
     public Limelight() {
         m_limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
@@ -19,6 +19,7 @@ public class Limelight extends SubsystemBase {
         ta = m_limelightTable.getEntry("ta").getDouble(2.5);
         tv = m_limelightTable.getEntry("tv").getDouble(0);
         ts = m_limelightTable.getEntry("ts").getDouble(0);
+        tid = m_limelightTable.getEntry("tid").getDouble(0);
         boolean m_limelightHasTarget = (tv < 1.0) ? false : true;
 
         SmartDashboard.putNumber("LimelightX", tx);
@@ -26,6 +27,7 @@ public class Limelight extends SubsystemBase {
         SmartDashboard.putNumber("LimelightArea", ta);
         SmartDashboard.putBoolean("LimelightTarget", m_limelightHasTarget);
         SmartDashboard.putNumber("Limelight Skew", ts);
+        SmartDashboard.putNumber("Target ID", tid);
     }
 
     public double getTX() {
@@ -46,6 +48,10 @@ public class Limelight extends SubsystemBase {
 
     public double getTS() {
         return ts;
+    }
+
+    public double getTargetId() {
+        return tid;
     }
 
 }

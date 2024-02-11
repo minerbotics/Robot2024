@@ -3,7 +3,12 @@ package frc.robot.commands;
 import frc.robot.Constants.GoalTypeConstants;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Swerve;
+
+import java.util.Optional;
+
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class ManeuverOn extends Command {
@@ -58,7 +63,8 @@ public class ManeuverOn extends Command {
         taMax = 3;
         break;
     }
-    moveWithCamera(txMin, txMax, taMin, taMax);
+    double targetId = whichAprilTag(m_goalType);
+    moveWithCamera(txMin, txMax, taMin, taMax, targetId);
   }
 
   // Returns true when the command should end.
@@ -67,7 +73,7 @@ public class ManeuverOn extends Command {
     return m_isInPosition;
   }
 
-  private void moveWithCamera(double txMin, double txMax, double taMin, double taMax) {
+  private void moveWithCamera(double txMin, double txMax, double taMin, double taMax, double targetId) {
     double tx = m_Limelight.getTX();
     double ta = m_Limelight.getTA();
     double tv = m_Limelight.getTV();
@@ -79,7 +85,7 @@ public class ManeuverOn extends Command {
     boolean inRange = false;
     boolean linedUp = false;
 
-    if (tv < 1.0) {
+    if (tv < 1.0 || m_Limelight.getTargetId() != targetId) {
       m_Swerve.drive(new ChassisSpeeds(vx, vy, omega));
       return;
     }
@@ -103,5 +109,34 @@ public class ManeuverOn extends Command {
     }
 
     m_Swerve.drive(new ChassisSpeeds(vx, vy, omega));
+  }
+
+  // Returns which april tag we want to target depending on which 
+  // alliance we are on and which goal we are trying to maneuver on.
+  private double whichAprilTag(int goalType) {
+    Optional<Alliance> alliance = DriverStation.getAlliance();
+    double tagId = 0;
+    if(alliance.get() == DriverStation.Alliance.Red) {
+      if (goalType == GoalTypeConstants.AMP) {
+        tagId = 5;
+      } else if(goalType == GoalTypeConstants.SPEAKER) {
+        tagId = 4;
+      } else if(goalType == GoalTypeConstants.SOURCE_1) {
+        tagId = 9;
+      } else if(goalType == GoalTypeConstants.SOURCE_3) {
+        tagId = 10;
+      } 
+    } else {
+      if (goalType == GoalTypeConstants.AMP) {
+        tagId = 6;
+      } else if(goalType == GoalTypeConstants.SPEAKER) {
+        tagId = 7;
+      } else if(goalType == GoalTypeConstants.SOURCE_1) {
+        tagId = 1;
+      } else if(goalType == GoalTypeConstants.SOURCE_3) {
+        tagId = 2;
+      } 
+    }
+    return tagId;
   }
 }

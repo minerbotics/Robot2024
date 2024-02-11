@@ -75,6 +75,7 @@ public final class Constants {
     public static final double SPEAKER_POSITION = -2;
     public static final double SOURCE_POSITION = 6;
     public static final double TRAP_POSITION = 6;
+    public static final double SWING_POSITION_TOLERANCE = 1;
   }
 
   public static class ClimberConstants {
