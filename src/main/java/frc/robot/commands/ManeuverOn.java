@@ -73,6 +73,9 @@ public class ManeuverOn extends Command {
     return m_isInPosition;
   }
 
+  // Calls the drive command with ChassisSpeeds based on how close
+  // the target is and how far to the left or right the target is
+  // and whether the specified target is in view.
   private void moveWithCamera(double txMin, double txMax, double taMin, double taMax, double targetId) {
     double tx = m_Limelight.getTX();
     double ta = m_Limelight.getTA();

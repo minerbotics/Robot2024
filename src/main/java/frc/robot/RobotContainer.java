@@ -10,6 +10,7 @@ import frc.robot.commands.ClimberDown;
 import frc.robot.commands.ClimberUp;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.Intake;
+import frc.robot.commands.ManualSwing;
 import frc.robot.commands.Shoot;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -68,6 +69,8 @@ public class RobotContainer {
             () -> -modifyAxis(m_driverController.getLeftX()) * Swerve.MAX_VELOCITY_METERS_PER_SECOND,
             () -> -modifyAxis(m_driverController.getRightX()) * Swerve.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
     ));
+
+    m_Swinger.setDefaultCommand(new ManualSwing(m_Swinger, m_OperatorController.getRightY()));
     SmartDashboard.updateValues();
     // Configure the trigger bindings
     configureBindings();
