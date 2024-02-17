@@ -150,7 +150,7 @@ public class Swerve extends SubsystemBase {
                 m_PoseEstimator::getEstimatedPosition, // Robot pose supplier
                 this::setPose, // Method to reset odometry (will be called if your auto has a starting pose)
                 this::getChassisSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-                this::drive, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+                this::rawDrive, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
                 new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
                         AutoConstants.TRANSLATION_AUTO_PID, // Translation PID constants
                         AutoConstants.ROTATION_AUTO_PID, // Rotation PID constants
@@ -199,6 +199,10 @@ public class Swerve extends SubsystemBase {
       m_slewY.calculate(chassisSpeeds.vyMetersPerSecond),
       m_slewRot.calculate(chassisSpeeds.omegaRadiansPerSecond)
     );
+  }
+
+  public void rawDrive(ChassisSpeeds chassisSpeeds) {
+    m_chassisSpeeds = chassisSpeeds;
   }
 
   @Override

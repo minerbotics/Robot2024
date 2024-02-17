@@ -10,6 +10,7 @@ import frc.robot.commands.ClimberDown;
 import frc.robot.commands.ClimberUp;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.Intake;
+import frc.robot.commands.ManeuverOn;
 import frc.robot.commands.ManualSwing;
 import frc.robot.commands.Shoot;
 import frc.robot.subsystems.Climber;
@@ -19,6 +20,7 @@ import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.Swinger;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -37,10 +39,11 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   // Subsystems
   private final Swerve m_Swerve;
-  private final Climber m_Climber;
+/*  private final Climber m_Climber;
   private final IntakeSubsystem m_IntakeSubsystem;
   private final Shooter m_Shooter;
   private final Swinger m_Swinger;
+*/
   // Commands
 
 
@@ -54,16 +57,17 @@ public class RobotContainer {
   public RobotContainer() {
     // Subsystems
     m_Swerve = new Swerve();
-    m_Climber = new Climber();
+/*    m_Climber = new Climber();
     m_IntakeSubsystem = new IntakeSubsystem();
     m_Shooter = new Shooter();
     m_Swinger = new Swinger();
-
+*/
     // Controllers
     m_driverController = new CommandXboxController(OperatorConstants.DRIVER_CONTROLLER_PORT);
     m_OperatorController = new CommandXboxController(OperatorConstants.OPERATOR_CONTROLLER_PORT);
 
     // Commands
+    NamedCommands.registerCommand("AmpShoot", new Shoot(m_Swerve, null, null, null, GoalTypeConstants.AMP));
     
     // The controls are for field-oriented driving:
     // Left stick Y axis -> forward and backwards movement
@@ -76,7 +80,7 @@ public class RobotContainer {
             () -> -modifyAxis(m_driverController.getRightX()) * Swerve.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
     ));
 
-    m_Swinger.setDefaultCommand(new ManualSwing(m_Swinger, m_OperatorController.getRightY()));
+ //   m_Swinger.setDefaultCommand(new ManualSwing(m_Swinger, m_OperatorController.getRightY()));
     SmartDashboard.updateValues();
     // Configure the trigger bindings
     configureBindings();
@@ -108,7 +112,7 @@ public class RobotContainer {
       .whileTrue(new DefaultDriveCommand(m_Swerve, () -> 0.0, () -> 0.5, () -> 0.0, true));
     m_driverController.povRight()
       .whileTrue(new DefaultDriveCommand(m_Swerve, () -> 0.0, () -> -0.5, () -> 0.0, true));
-    m_driverController.y()
+/*     m_driverController.y()
       .onTrue(new ClimberUp(m_Climber));
     m_driverController.a()
       .onTrue(new ClimberDown(m_Climber));
@@ -124,7 +128,8 @@ public class RobotContainer {
       .whileTrue(new Intake(m_Swerve, m_IntakeSubsystem, m_Shooter, m_Swinger, GoalTypeConstants.SOURCE_2));
     m_OperatorController.leftBumper()
       .whileTrue(new Intake(m_Swerve, m_IntakeSubsystem, m_Shooter, m_Swinger, GoalTypeConstants.SOURCE_3));
-    
+*/    
+    m_driverController.x().whileTrue(new ManeuverOn(m_Swerve, GoalTypeConstants.SPEAKER));
 
   }
 

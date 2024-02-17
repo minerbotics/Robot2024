@@ -33,34 +33,34 @@ public class ManeuverOn extends Command {
   public void execute() {
     switch(m_goalType){
       case GoalTypeConstants.AMP:
-        txMin = -4;
-        txMax = 4;
-        taMin = 2;
-        taMax = 3;
+        txMin = -2;
+        txMax = 2;
+        taMin = 5;
+        taMax = 6;
         break;
       case GoalTypeConstants.SPEAKER:
-        txMin = -4;
-        txMax = 4;
-        taMin = 2;
-        taMax = 3;
+        txMin = -2;
+        txMax = 2;
+        taMin = .75;
+        taMax = .9;
         break;
       case GoalTypeConstants.SOURCE_1:
-        txMin = -4;
-        txMax = 4;
-        taMin = 2;
-        taMax = 3;
+        txMin = -2;
+        txMax = 2;
+        taMin = 5;
+        taMax = 6;
         break;
       case GoalTypeConstants.SOURCE_2:
-        txMin = -4;
-        txMax = 4;
-        taMin = 2;
-        taMax = 3;
+        txMin = -2;
+        txMax = 2;
+        taMin = 5;
+        taMax = 6;
         break;
       case GoalTypeConstants.SOURCE_3:
-        txMin = -4;
-        txMax = 4;
-        taMin = 2;
-        taMax = 3;
+        txMin = -2;
+        txMax = 2;
+        taMin = 5;
+        taMax = 6;
         break;
     }
     double targetId = whichAprilTag(m_goalType);
@@ -73,6 +73,15 @@ public class ManeuverOn extends Command {
     return m_isInPosition;
   }
 
+  @Override
+  public void end(boolean interrupted) {
+    m_Swerve.rawDrive(
+      new ChassisSpeeds(
+        0,
+        0, 
+        0));
+  }
+
   // Calls the drive command with ChassisSpeeds based on how close
   // the target is and how far to the left or right the target is
   // and whether the specified target is in view.
@@ -80,6 +89,7 @@ public class ManeuverOn extends Command {
     double tx = m_Limelight.getTX();
     double ta = m_Limelight.getTA();
     double tv = m_Limelight.getTV();
+    double ts = m_Limelight.getTS();
 
     double vx = 0.0;
     double vy = 0.0;
@@ -89,19 +99,26 @@ public class ManeuverOn extends Command {
     boolean linedUp = false;
 
     if (tv < 1.0 || m_Limelight.getTargetId() != targetId) {
-      m_Swerve.drive(new ChassisSpeeds(vx, vy, omega));
+      m_Swerve.rawDrive(new ChassisSpeeds(vx, vy, omega));
       return;
     }
 
     if (tx > txMax || tx < txMin) {
-      vy = tx * 0.05;
+      vy = tx * 0.035;
+      linedUp = false;
     } else {
       vy = 0;
       linedUp = true;
     }
 
-    if (ta > taMax || ta < taMin) {
-      vx = (ta - ((taMax + taMin)/2)) * 0.5;
+    if (ta > taMax) {
+      // Forward
+      vx = 0.25;
+      linedUp = false;
+    } else if (ta < taMin) {
+      // Backward
+      vx = -0.25;
+      linedUp = false;
     } else {
       vx = 0;
       inRange = true;
@@ -109,9 +126,11 @@ public class ManeuverOn extends Command {
 
     if(linedUp && inRange) {
       m_isInPosition = true;
+    } else {
+      m_isInPosition = false;
     }
 
-    m_Swerve.drive(new ChassisSpeeds(vx, vy, omega));
+    m_Swerve.rawDrive(new ChassisSpeeds(vx, vy, omega));
   }
 
   // Returns which april tag we want to target depending on which 
