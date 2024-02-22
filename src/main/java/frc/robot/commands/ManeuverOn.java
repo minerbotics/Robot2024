@@ -89,7 +89,6 @@ public class ManeuverOn extends Command {
     double tx = m_Limelight.getTX();
     double ta = m_Limelight.getTA();
     double tv = m_Limelight.getTV();
-    double ts = m_Limelight.getTS();
 
     double vx = 0.0;
     double vy = 0.0;

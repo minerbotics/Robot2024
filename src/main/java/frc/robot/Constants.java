@@ -16,7 +16,7 @@ import com.pathplanner.lib.util.PIDConstants;
  */
 public final class Constants {
 
-  public static final int PIGEON_ID = 20;
+  public static final int PIGEON_ID = 15;
   /**
    * The left-to-right distance between the drivetrain wheels
    *
@@ -35,22 +35,22 @@ public final class Constants {
   public static final int FRONT_LEFT_MODULE_DRIVE_MOTOR = 5;
   public static final int FRONT_LEFT_MODULE_STEER_MOTOR = 6;
   public static final int FRONT_LEFT_MODULE_STEER_ENCODER = 9;
-  public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(142.99);
+  public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(306.3);
 
   public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 1;
   public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 2;
   public static final int FRONT_RIGHT_MODULE_STEER_ENCODER = 11;
-  public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(219.81);
+  public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(82.8);
 
   public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 7;
   public static final int BACK_LEFT_MODULE_STEER_MOTOR = 8;
   public static final int BACK_LEFT_MODULE_STEER_ENCODER = 10;
-  public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(265.43);
+  public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(35.5);
 
   public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 3;
   public static final int BACK_RIGHT_MODULE_STEER_MOTOR = 4;
   public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 12;
-  public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(100.46);
+  public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(141.6);
 
   public static final double TRANSLATION_SLEW = 1.55;
   public static final double ROTATION_SLEW = 3.00;

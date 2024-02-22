@@ -36,12 +36,19 @@ public class DoShoot extends Command {
       default:
         break;
     }
+    
 
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+
     return false;
+  }
+  @Override
+  public void end(boolean interrupted) {
+    m_intake.stop();
+    m_shooter.stop();
   }
 }
