@@ -47,4 +47,8 @@ public class SwingToPosition extends Command {
   public boolean isFinished() {
     return (Math.abs(m_Swinger.getPosition() - this.targetPosition) <= SwingConstants.SWING_POSITION_TOLERANCE);
   }
+
+  public void end(boolean interrupted) {
+    m_Swinger.stop();
+  }
 }

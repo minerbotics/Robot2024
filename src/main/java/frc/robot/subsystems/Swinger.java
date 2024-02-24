@@ -30,13 +30,13 @@ public class Swinger extends SubsystemBase {
     m_RightSwingMotor.restoreFactoryDefaults();
 
     // PID coefficients
-    kP = 0.1;
+    kP = 1.5;
     kI = 1e-4;
-    kD = 1;
+    kD = 0;
     kIz = 0;
     kFF = 0;
-    kMaxOutput = 1;
-    kMinOutput = -1;
+    kMaxOutput = 0.5;
+    kMinOutput = -0.5;
 
     // set PID coefficients
     m_PidController.setP(kP);

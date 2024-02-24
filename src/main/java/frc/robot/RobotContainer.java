@@ -16,6 +16,7 @@ import frc.robot.commands.ManeuverOn;
 import frc.robot.commands.ManualSwing;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.SpinTopShoot;
+import frc.robot.commands.SwingToPosition;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.Shooter;
@@ -24,6 +25,7 @@ import frc.robot.subsystems.Swinger;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.path.GoalEndState;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -115,16 +117,14 @@ public class RobotContainer {
       .whileTrue(new DefaultDriveCommand(m_Swerve, () -> 0.0, () -> 0.5, () -> 0.0, true));
     m_driverController.povRight()
       .whileTrue(new DefaultDriveCommand(m_Swerve, () -> 0.0, () -> -0.5, () -> 0.0, true));
-    m_driverController.a().whileTrue(new DoIntake(m_IntakeSubsystem, m_Shooter));
-    m_driverController.y().whileTrue(new DoShoot(m_IntakeSubsystem, m_Shooter, GoalTypeConstants.SPEAKER));
-    m_driverController.b().whileTrue(new SpinTopShoot(m_Shooter));
+//    m_driverController.y().whileTrue(new DoShoot(m_IntakeSubsystem, m_Shooter, GoalTypeConstants.SPEAKER));
+//    m_driverController.b().whileTrue(new SpinTopShoot(m_Shooter));
 /*     m_driverController.y()
       .onTrue(new ClimberUp(m_Climber));
     m_driverController.a()
       .onTrue(new ClimberDown(m_Climber));
 
-    m_OperatorController.y()
-      .whileTrue(new Shoot(m_Swerve, m_Shooter, m_IntakeSubsystem, m_Swinger, GoalTypeConstants.SPEAKER));
+
     m_OperatorController.a()
       .whileTrue(new Shoot(m_Swerve, m_Shooter, m_IntakeSubsystem, m_Swinger, GoalTypeConstants.AMP));
     m_OperatorController.leftBumper()
@@ -135,7 +135,13 @@ public class RobotContainer {
     m_OperatorController.rightBumper()
       .whileTrue(new Intake(m_Swerve, m_IntakeSubsystem, m_Shooter, m_Swinger, GoalTypeConstants.SOURCE_3));
 */    
-//    m_driverController.x().whileTrue(new ManeuverOn(m_Swerve, GoalTypeConstants.SPEAKER));
+    m_OperatorController.leftBumper().whileTrue(new SwingToPosition(m_Swinger, GoalTypeConstants.SOURCE_1));
+    m_OperatorController.a().whileTrue(new DoIntake(m_IntakeSubsystem, m_Shooter));
+    m_OperatorController.b().whileTrue(new DoShoot(m_IntakeSubsystem, m_Shooter, GoalTypeConstants.AMP));
+    m_OperatorController.rightBumper().whileTrue(new SpinTopShoot(m_Shooter));
+    m_OperatorController.y()
+      .whileTrue(new DoShoot(m_IntakeSubsystem, m_Shooter, GoalTypeConstants.SPEAKER));
+    m_OperatorController.x().whileTrue(new ManeuverOn(m_Swerve, GoalTypeConstants.AMP));
 
   }
 

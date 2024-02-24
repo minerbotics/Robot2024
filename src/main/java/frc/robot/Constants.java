@@ -52,8 +52,8 @@ public final class Constants {
   public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 12;
   public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(141.6);
 
-  public static final double TRANSLATION_SLEW = 1.55;
-  public static final double ROTATION_SLEW = 3.00;
+  public static final double TRANSLATION_SLEW = 2.5;
+  public static final double ROTATION_SLEW = 5;
 
   public static final int PCM_ID = 0;
 
@@ -75,11 +75,11 @@ public final class Constants {
   public static class SwingConstants {
     public static final int LEFT_SWING_MOTOR = 24;
     public static final int RIGHT_SWING_MOTOR = 25;
-    public static final double AMP_POSITION = 35;
-    public static final double SPEAKER_POSITION = -35;
-    public static final double SOURCE_POSITION = 90;
-    public static final double TRAP_POSITION = 90;
-    public static final double SWING_POSITION_TOLERANCE = 3;
+    public static final double AMP_POSITION = -35;
+    public static final double SPEAKER_POSITION = 35;
+    public static final double SOURCE_POSITION = 45;
+    public static final double TRAP_POSITION = 40;
+    public static final double SWING_POSITION_TOLERANCE = 10;
   }
 
   public static class ClimberConstants {

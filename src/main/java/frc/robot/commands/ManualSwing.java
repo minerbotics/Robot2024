@@ -16,7 +16,7 @@ public class ManualSwing extends Command {
 
     @Override
     public void execute() {
-        m_Swinger.move(m_Controller.getRightY());
+        m_Swinger.move(m_Controller.getLeftY() * 0.75);
     }
 
     @Override
