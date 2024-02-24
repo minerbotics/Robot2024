@@ -16,19 +16,24 @@ public class Shooter extends SubsystemBase {
   }
 
   public void ampOut() {
-    m_BottomShooterMotor.set(0.5);
-    m_MidShooterMotor.set(0.5);
+    m_BottomShooterMotor.set(0.25);
+    m_MidShooterMotor.set(0.25);
   }
 
   public void speakerOut() {
     m_TopShooterMotor.set(-1);
-    m_MidShooterMotor.set(-1);
+    m_MidShooterMotor.set(-0.25);
+    m_BottomShooterMotor.set(-0.25);
   }
 
   public void intakeIn() {
     m_BottomShooterMotor.set(-0.5);
-    m_MidShooterMotor.set(-0.5);
+    m_MidShooterMotor.set(0);
     m_TopShooterMotor.set(0);
+  }
+
+  public void spinTop() {
+    m_TopShooterMotor.set(-1);
   }
 
   public void stop() {

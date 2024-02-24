@@ -1,21 +1,22 @@
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.Swinger;
 
 public class ManualSwing extends Command {
     private final Swinger m_Swinger;
 
-    private double m_Speed;
+    private CommandXboxController m_Controller;
 
-    public ManualSwing(Swinger swinger, double speed) {
+    public ManualSwing(Swinger swinger, CommandXboxController controller) {
         m_Swinger = swinger;
-        m_Speed = speed;
+        m_Controller = controller;
         addRequirements(swinger);
     }
 
     @Override
     public void execute() {
-        m_Swinger.move(m_Speed);
+        m_Swinger.move(m_Controller.getRightY());
     }
 
     @Override

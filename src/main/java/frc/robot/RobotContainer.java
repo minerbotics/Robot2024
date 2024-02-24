@@ -15,6 +15,7 @@ import frc.robot.commands.Intake;
 import frc.robot.commands.ManeuverOn;
 import frc.robot.commands.ManualSwing;
 import frc.robot.commands.Shoot;
+import frc.robot.commands.SpinTopShoot;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.Shooter;
@@ -51,7 +52,7 @@ public class RobotContainer {
 
 
   private final CommandXboxController m_driverController;
-//  private final CommandXboxController m_OperatorController;
+  private final CommandXboxController m_OperatorController;
 
   private final SendableChooser<Command> autoChooser;
 
@@ -66,7 +67,7 @@ public class RobotContainer {
 
     // Controllers
     m_driverController = new CommandXboxController(OperatorConstants.DRIVER_CONTROLLER_PORT);
-//    m_OperatorController = new CommandXboxController(OperatorConstants.OPERATOR_CONTROLLER_PORT);
+    m_OperatorController = new CommandXboxController(OperatorConstants.OPERATOR_CONTROLLER_PORT);
 
     // Commands
 //    NamedCommands.registerCommand("AmpShoot", new Shoot(m_Swerve, null, null, null, GoalTypeConstants.AMP));
@@ -82,7 +83,7 @@ public class RobotContainer {
             () -> -modifyAxis(m_driverController.getRightX()) * Swerve.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
     ));
 
-    m_Swinger.setDefaultCommand(new ManualSwing(m_Swinger, m_driverController.getRightY()));
+    m_Swinger.setDefaultCommand(new ManualSwing(m_Swinger, m_OperatorController));
     SmartDashboard.updateValues();
     // Configure the trigger bindings
     configureBindings();
@@ -116,6 +117,7 @@ public class RobotContainer {
       .whileTrue(new DefaultDriveCommand(m_Swerve, () -> 0.0, () -> -0.5, () -> 0.0, true));
     m_driverController.a().whileTrue(new DoIntake(m_IntakeSubsystem, m_Shooter));
     m_driverController.y().whileTrue(new DoShoot(m_IntakeSubsystem, m_Shooter, GoalTypeConstants.SPEAKER));
+    m_driverController.b().whileTrue(new SpinTopShoot(m_Shooter));
 /*     m_driverController.y()
       .onTrue(new ClimberUp(m_Climber));
     m_driverController.a()
