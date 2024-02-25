@@ -146,12 +146,9 @@ public class RobotContainer {
 //    m_OperatorController.y().whileTrue(new DoShoot(m_IntakeSubsystem, m_Shooter, GoalTypeConstants.SPEAKER));
 
     /** SwingToPosition Tests */
-    m_OperatorController.leftBumper()
-      .whileTrue(new SwingToPosition(m_Swinger, GoalTypeConstants.SOURCE_1));
-    m_OperatorController.a()
-      .whileTrue(new SwingToPosition(m_Swinger, GoalTypeConstants.AMP));
-    m_OperatorController.y()
-      .whileTrue(new SwingToPosition(m_Swinger, GoalTypeConstants.SPEAKER));
+    m_OperatorController.leftBumper().whileTrue(new SwingToPosition(m_Swinger, GoalTypeConstants.SOURCE_1));
+//    m_OperatorController.a().whileTrue(new SwingToPosition(m_Swinger, GoalTypeConstants.AMP));
+//    m_OperatorController.y().whileTrue(new SwingToPosition(m_Swinger, GoalTypeConstants.SPEAKER));
     
   }
 
