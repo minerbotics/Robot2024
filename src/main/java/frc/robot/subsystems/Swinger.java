@@ -6,6 +6,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.SparkMaxAlternateEncoder;
 import com.revrobotics.CANSparkBase.ControlType;
+import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -27,6 +28,8 @@ public class Swinger extends SubsystemBase {
     m_LeftSwingMotor.restoreFactoryDefaults();
     m_RightSwingMotor.restoreFactoryDefaults();
     m_LeftSwingMotor.follow(m_RightSwingMotor, true);
+    m_RightSwingMotor.setIdleMode(IdleMode.kBrake);
+    m_LeftSwingMotor.setIdleMode(IdleMode.kBrake);
 
     m_PidController = m_RightSwingMotor.getPIDController();
     m_Encoder = m_RightSwingMotor.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, kCPR);
