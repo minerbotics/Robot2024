@@ -109,6 +109,7 @@ public class RobotContainer {
     m_driverController.start()
       .onTrue(new InstantCommand(() -> m_Swerve.zeroGyroscope()));
 
+    /** DPAD commands for robot centric slow movement */
     m_driverController.povUp()
       .whileTrue(new DefaultDriveCommand(m_Swerve, () -> 0.5, () -> 0.0, () -> 0.0, true));
     m_driverController.povDown()
@@ -117,32 +118,41 @@ public class RobotContainer {
       .whileTrue(new DefaultDriveCommand(m_Swerve, () -> 0.0, () -> 0.5, () -> 0.0, true));
     m_driverController.povRight()
       .whileTrue(new DefaultDriveCommand(m_Swerve, () -> 0.0, () -> -0.5, () -> 0.0, true));
-//    m_driverController.y().whileTrue(new DoShoot(m_IntakeSubsystem, m_Shooter, GoalTypeConstants.SPEAKER));
-//    m_driverController.b().whileTrue(new SpinTopShoot(m_Shooter));
+
+      /** Climber commands */
 /*     m_driverController.y()
       .onTrue(new ClimberUp(m_Climber));
     m_driverController.a()
       .onTrue(new ClimberDown(m_Climber));
+*/
 
+    /** Combo Commands (swing -> maneuver -> intake/shoot) */
+//    m_OperatorController.a().whileTrue(new Shoot(m_Swerve, m_Shooter, m_IntakeSubsystem, m_Swinger, GoalTypeConstants.AMP));
+//    m_OperatorController.leftBumper().whileTrue(new Intake(m_Swerve, m_IntakeSubsystem, m_Shooter, m_Swinger, GoalTypeConstants.SOURCE_1));
+//    m_OperatorController.leftBumper().and(m_OperatorController.rightBumper()).whileTrue(new Intake(m_Swerve, m_IntakeSubsystem, m_Shooter, m_Swinger, GoalTypeConstants.SOURCE_2));
+//    m_OperatorController.rightBumper().whileTrue(new Intake(m_Swerve, m_IntakeSubsystem, m_Shooter, m_Swinger, GoalTypeConstants.SOURCE_3));
+//    m_OperatorController.y().whileTrue(new Shoot(m_Swerve, m_Shooter, m_IntakeSubsystem, m_Swinger, GoalTypeConstants.SPEAKER));
 
+    /** Individial commands for testing */
+    /** ManeuverOn Tests */
+//    m_OperatorController.a().whileTrue(new ManeuverOn(m_Swerve, GoalTypeConstants.AMP));
+//    m_OperatorController.y().whileTrue(new ManeuverOn(m_Swerve, GoalTypeConstants.SPEAKER));
+
+    /** DoIntake Test */
+//    m_OperatorController.leftBumper().whileTrue(new DoIntake(m_IntakeSubsystem, m_Shooter));
+
+    /** DoShoot Tests */
+//    m_OperatorController.a().whileTrue(new DoShoot(m_IntakeSubsystem, m_Shooter, GoalTypeConstants.AMP));
+//    m_OperatorController.y().whileTrue(new DoShoot(m_IntakeSubsystem, m_Shooter, GoalTypeConstants.SPEAKER));
+
+    /** SwingToPosition Tests */
+    m_OperatorController.leftBumper()
+      .whileTrue(new SwingToPosition(m_Swinger, GoalTypeConstants.SOURCE_1));
     m_OperatorController.a()
-      .whileTrue(new Shoot(m_Swerve, m_Shooter, m_IntakeSubsystem, m_Swinger, GoalTypeConstants.AMP));
-    m_OperatorController.leftBumper()
-      .whileTrue(new Intake(m_Swerve, m_IntakeSubsystem, m_Shooter, m_Swinger, GoalTypeConstants.SOURCE_1));
-    m_OperatorController.leftBumper()
-      .and(m_OperatorController.rightBumper())
-      .whileTrue(new Intake(m_Swerve, m_IntakeSubsystem, m_Shooter, m_Swinger, GoalTypeConstants.SOURCE_2));
-    m_OperatorController.rightBumper()
-      .whileTrue(new Intake(m_Swerve, m_IntakeSubsystem, m_Shooter, m_Swinger, GoalTypeConstants.SOURCE_3));
-*/    
-    m_OperatorController.leftBumper().whileTrue(new SwingToPosition(m_Swinger, GoalTypeConstants.SOURCE_1));
-    m_OperatorController.a().whileTrue(new DoIntake(m_IntakeSubsystem, m_Shooter));
-    m_OperatorController.b().whileTrue(new DoShoot(m_IntakeSubsystem, m_Shooter, GoalTypeConstants.AMP));
-    m_OperatorController.rightBumper().whileTrue(new SpinTopShoot(m_Shooter));
+      .whileTrue(new SwingToPosition(m_Swinger, GoalTypeConstants.AMP));
     m_OperatorController.y()
-      .whileTrue(new DoShoot(m_IntakeSubsystem, m_Shooter, GoalTypeConstants.SPEAKER));
-    m_OperatorController.x().whileTrue(new ManeuverOn(m_Swerve, GoalTypeConstants.AMP));
-
+      .whileTrue(new SwingToPosition(m_Swinger, GoalTypeConstants.SPEAKER));
+    
   }
 
   /**

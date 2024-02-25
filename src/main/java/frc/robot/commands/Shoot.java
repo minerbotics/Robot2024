@@ -27,8 +27,8 @@ public class Shoot extends Command {
   @Override
   public void execute() {
     if (m_goalType != GoalTypeConstants.TRAP) {
-      new ManeuverOn(m_Swerve, m_goalType)
-        .andThen(new SwingToPosition(m_Swinger, m_goalType))
+      new SwingToPosition(m_Swinger, m_goalType)
+        .andThen(new ManeuverOn(m_Swerve, m_goalType))
         .andThen(new DoShoot(m_Intake, m_Shooter, m_goalType));
     } else {
       new SwingToPosition(m_Swinger, m_goalType)

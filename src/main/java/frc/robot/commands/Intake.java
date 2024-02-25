@@ -27,8 +27,8 @@ public class Intake extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    new ManeuverOn(m_Swerve, m_GoalType)
-      .andThen(new SwingToPosition(m_Swinger, m_GoalType))
+    new SwingToPosition(m_Swinger, m_GoalType)
+      .andThen(new ManeuverOn(m_Swerve, m_GoalType))
       .andThen(new DoIntake(m_Intake, m_Shooter));
   }
 
