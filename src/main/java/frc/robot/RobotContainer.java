@@ -125,30 +125,9 @@ public class RobotContainer {
     m_driverController.a()
       .onTrue(new ClimberDown(m_Climber));
 
-
-    /** Combo Commands (swing -> maneuver -> intake/shoot) */
-//    m_OperatorController.a().whileTrue(new Shoot(m_Swerve, m_Shooter, m_IntakeSubsystem, m_Swinger, GoalTypeConstants.AMP));
-//    m_OperatorController.leftBumper().whileTrue(new Intake(m_Swerve, m_IntakeSubsystem, m_Shooter, m_Swinger, GoalTypeConstants.SOURCE_1));
-//    m_OperatorController.leftBumper().and(m_OperatorController.rightBumper()).whileTrue(new Intake(m_Swerve, m_IntakeSubsystem, m_Shooter, m_Swinger, GoalTypeConstants.SOURCE_2));
-//    m_OperatorController.rightBumper().whileTrue(new Intake(m_Swerve, m_IntakeSubsystem, m_Shooter, m_Swinger, GoalTypeConstants.SOURCE_3));
-//    m_OperatorController.y().whileTrue(new Shoot(m_Swerve, m_Shooter, m_IntakeSubsystem, m_Swinger, GoalTypeConstants.SPEAKER));
-
-    /** Individial commands for testing */
-    /** ManeuverOn Tests */
-//    m_OperatorController.a().whileTrue(new ManeuverOn(m_Swerve, GoalTypeConstants.AMP));
-//    m_OperatorController.y().whileTrue(new ManeuverOn(m_Swerve, GoalTypeConstants.SPEAKER));
-
-    /** DoIntake Test */
-//    m_OperatorController.leftBumper().whileTrue(new DoIntake(m_IntakeSubsystem, m_Shooter));
-
-    /** DoShoot Tests */
-//    m_OperatorController.a().whileTrue(new DoShoot(m_IntakeSubsystem, m_Shooter, GoalTypeConstants.AMP));
-//    m_OperatorController.y().whileTrue(new DoShoot(m_IntakeSubsystem, m_Shooter, GoalTypeConstants.SPEAKER));
-
-    /** SwingToPosition Tests */
-    m_OperatorController.leftBumper().whileTrue(new SwingToPosition(m_Swinger, GoalTypeConstants.SOURCE_1));
-//    m_OperatorController.a().whileTrue(new SwingToPosition(m_Swinger, GoalTypeConstants.AMP));
-//    m_OperatorController.y().whileTrue(new SwingToPosition(m_Swinger, GoalTypeConstants.SPEAKER));
+    // Only 1 of the following 2 command bindings should be uncommented.
+//    setOperatorComboCommandBindings();
+    setOperatorManualCommandBindings();
     
   }
 
@@ -182,6 +161,36 @@ public class RobotContainer {
     value = Math.copySign(value * value, value);
 
     return value;
+  }
+
+  /** Combo Commands (swing -> maneuver -> intake/shoot) */
+  private void setOperatorComboCommandBindings() {
+    m_OperatorController.x().whileTrue(new Shoot(m_Swerve, m_Shooter, m_IntakeSubsystem, m_Swinger, GoalTypeConstants.AMP));
+    m_OperatorController.leftBumper().whileTrue(new Intake(m_Swerve, m_IntakeSubsystem, m_Shooter, m_Swinger, GoalTypeConstants.SOURCE_1));
+    m_OperatorController.leftBumper().and(m_OperatorController.rightBumper()).whileTrue(new Intake(m_Swerve, m_IntakeSubsystem, m_Shooter, m_Swinger, GoalTypeConstants.SOURCE_2));
+    m_OperatorController.rightBumper().whileTrue(new Intake(m_Swerve, m_IntakeSubsystem, m_Shooter, m_Swinger, GoalTypeConstants.SOURCE_3));
+    m_OperatorController.y().whileTrue(new Shoot(m_Swerve, m_Shooter, m_IntakeSubsystem, m_Swinger, GoalTypeConstants.SPEAKER));
+  }
+
+  /** Button Bindings for when PID isn't working and arm movement is manual. */
+  private void setOperatorManualCommandBindings() {
+    // Maneuver on source or amp (their target limelight values are the same)
+    m_OperatorController.a().whileTrue(new ManeuverOn(m_Swerve, GoalTypeConstants.SOURCE_1, false));
+    m_OperatorController.leftBumper().whileTrue(new DoIntake(m_IntakeSubsystem, m_Shooter));
+    m_OperatorController.rightBumper().whileTrue(new DoIntake(m_IntakeSubsystem, m_Shooter));
+    
+    // AmpShoot
+    m_OperatorController.x().whileTrue(new DoShoot(m_IntakeSubsystem, m_Shooter, GoalTypeConstants.AMP));
+
+    // SpeakerShoot
+    m_OperatorController.b().whileTrue(new ManeuverOn(m_Swerve, GoalTypeConstants.SPEAKER, false));
+    m_OperatorController.y().whileTrue(new DoShoot(m_IntakeSubsystem, m_Shooter, GoalTypeConstants.SPEAKER));
+
+    // Arm Positions
+    m_OperatorController.povDown().onTrue(new SwingToPosition(m_Swinger, 0));
+    m_OperatorController.povLeft().onTrue(new SwingToPosition(m_Swinger, GoalTypeConstants.SOURCE_1));
+    m_OperatorController.povRight().onTrue(new SwingToPosition(m_Swinger, GoalTypeConstants.AMP));
+    m_OperatorController.povUp().onTrue(new SwingToPosition(m_Swinger, GoalTypeConstants.SPEAKER));
   }
 
 }

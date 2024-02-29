@@ -17,15 +17,21 @@ public class ManeuverOn extends Command {
   private final int m_goalType;
 
   private double txMin, txMax, taMin, taMax;
-  private boolean m_isInPosition;
+  private boolean m_isInPosition, m_checkTarget;
 
   public ManeuverOn(Swerve swerve, int goalType) {
     m_Swerve = swerve;
     m_Limelight = new Limelight();
     m_goalType = goalType; 
     m_isInPosition = false;
+    m_checkTarget = true;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(swerve);
+  }
+
+  public ManeuverOn(Swerve swerve, int goalType, boolean checkTarget) {
+    this(swerve, goalType);
+    m_checkTarget = checkTarget;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -97,7 +103,7 @@ public class ManeuverOn extends Command {
     boolean inRange = false;
     boolean linedUp = false;
 
-    if (tv < 1.0 || m_Limelight.getTargetId() != targetId) {
+    if (tv < 1.0 || (m_checkTarget && m_Limelight.getTargetId() != targetId)) {
       m_Swerve.rawDrive(new ChassisSpeeds(vx, vy, omega));
       return;
     }
