@@ -73,6 +73,7 @@ public final class Constants {
   }
 
   public static class SwingConstants {
+    public static final int DIO_PORT = 0;
     public static final int LEFT_SWING_MOTOR = 24;
     public static final int RIGHT_SWING_MOTOR = 25;
     public static final double AMP_POSITION = -35;
@@ -83,11 +84,8 @@ public final class Constants {
   }
 
   public static class ClimberConstants {
-    public static final int LEFT_CLIMB_UP_CHANNEL = 1;    
-    public static final int LEFT_CLIMB_DOWN_CHANNEL = 2;
-    public static final int RIGHT_CLIMB_UP_CHANNEL = 3;
-    public static final int RIGHT_CLIMB_DOWN_CHANNEL = 4;
-
+    public static final int CLIMBER_UP_CHANNEL = 4;    
+    public static final int CLIMBER_DOWN_CHANNEL = 5;
   }
 
   public static class GoalTypeConstants {

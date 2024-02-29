@@ -8,6 +8,8 @@ import com.revrobotics.SparkMaxAlternateEncoder;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.SwingConstants;
@@ -18,7 +20,7 @@ public class Swinger extends SubsystemBase {
 
   private CANSparkMax m_LeftSwingMotor, m_RightSwingMotor;
   private SparkPIDController m_PidController;
-  private RelativeEncoder m_Encoder;
+  private DutyCycleEncoder m_Encoder;
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
 
 
@@ -33,8 +35,10 @@ public class Swinger extends SubsystemBase {
     m_LeftSwingMotor.setIdleMode(IdleMode.kBrake);
 
     m_PidController = m_RightSwingMotor.getPIDController();
-    m_Encoder = m_RightSwingMotor.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, kCPR);
-    m_PidController.setFeedbackDevice(m_Encoder);
+//    m_Encoder = m_RightSwingMotor.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, kCPR);
+      DigitalInput dio = new DigitalInput(SwingConstants.DIO_PORT);
+      m_Encoder = new DutyCycleEncoder(dio);
+//    m_PidController.setFeedbackDevice(m_Encoder);
 
     // PID coefficients
     kP = 1;
@@ -57,20 +61,20 @@ public class Swinger extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Alt Encoder Position", m_Encoder.getPosition());
-    SmartDashboard.putBoolean("Encoder Position Conversion", m_Encoder.getInverted());
-    SmartDashboard.putNumber("Alt Encoder Velocity", m_Encoder.getVelocity());
-    SmartDashboard.putNumber("Applied Output", m_RightSwingMotor.getAppliedOutput());
-
+//    SmartDashboard.putNumber("Alt Encoder Position", m_Encoder.getPosition());
+//    SmartDashboard.putBoolean("Encoder Position Conversion", m_Encoder.getInverted());
+//    SmartDashboard.putNumber("Alt Encoder Velocity", m_Encoder.getVelocity());
+//    SmartDashboard.putNumber("Applied Output", m_RightSwingMotor.getAppliedOutput());
+      SmartDashboard.putNumber("Absolute Encoder Position", m_Encoder.getAbsolutePosition());
   }
 
   public void swingToPosition(double position) {
     double rotations = degreesToRotation(position);
-    m_PidController.setReference(rotations, ControlType.kPosition);
+//    m_PidController.setReference(rotations, ControlType.kPosition);
   }
 
   public double getPosition() {
-    return m_Encoder.getPosition();
+    return m_Encoder.getAbsolutePosition();
   }
 
   public void move(double speed) {

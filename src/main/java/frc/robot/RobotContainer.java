@@ -44,7 +44,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   // Subsystems
   private final Swerve m_Swerve;
-//  private final Climber m_Climber;
+  private final Climber m_Climber;
   private final IntakeSubsystem m_IntakeSubsystem;
   private final Shooter m_Shooter;
   private final Swinger m_Swinger;
@@ -62,7 +62,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Subsystems
     m_Swerve = new Swerve();
-//    m_Climber = new Climber();
+    m_Climber = new Climber();
     m_IntakeSubsystem = new IntakeSubsystem();
     m_Shooter = new Shooter();
     m_Swinger = new Swinger();
@@ -120,11 +120,11 @@ public class RobotContainer {
       .whileTrue(new DefaultDriveCommand(m_Swerve, () -> 0.0, () -> -0.5, () -> 0.0, true));
 
       /** Climber commands */
-/*     m_driverController.y()
+     m_driverController.y()
       .onTrue(new ClimberUp(m_Climber));
     m_driverController.a()
       .onTrue(new ClimberDown(m_Climber));
-*/
+
 
     /** Combo Commands (swing -> maneuver -> intake/shoot) */
 //    m_OperatorController.a().whileTrue(new Shoot(m_Swerve, m_Shooter, m_IntakeSubsystem, m_Swinger, GoalTypeConstants.AMP));
