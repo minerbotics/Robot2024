@@ -20,7 +20,8 @@ public class Swinger extends SubsystemBase {
 
   private CANSparkMax m_LeftSwingMotor, m_RightSwingMotor;
   private SparkPIDController m_PidController;
-  private DutyCycleEncoder m_Encoder;
+//  private DutyCycleEncoder m_Encoder;
+  private RelativeEncoder m_Encoder;
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
 
 
@@ -35,13 +36,12 @@ public class Swinger extends SubsystemBase {
     m_LeftSwingMotor.setIdleMode(IdleMode.kBrake);
 
     m_PidController = m_RightSwingMotor.getPIDController();
-//    m_Encoder = m_RightSwingMotor.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, kCPR);
-      DigitalInput dio = new DigitalInput(SwingConstants.DIO_PORT);
-      m_Encoder = new DutyCycleEncoder(dio);
-//    m_PidController.setFeedbackDevice(m_Encoder);
+    m_Encoder = m_RightSwingMotor.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, kCPR);
+//    DigitalInput dio = new DigitalInput(SwingConstants.DIO_PORT);
+    m_PidController.setFeedbackDevice(m_Encoder);
 
     // PID coefficients
-    kP = 1;
+    kP = 0.1;
     kI = 1e-4;
     kD = 0;
     kIz = 0;
@@ -61,20 +61,20 @@ public class Swinger extends SubsystemBase {
 
   @Override
   public void periodic() {
-//    SmartDashboard.putNumber("Alt Encoder Position", m_Encoder.getPosition());
-//    SmartDashboard.putBoolean("Encoder Position Conversion", m_Encoder.getInverted());
-//    SmartDashboard.putNumber("Alt Encoder Velocity", m_Encoder.getVelocity());
-//    SmartDashboard.putNumber("Applied Output", m_RightSwingMotor.getAppliedOutput());
-      SmartDashboard.putNumber("Absolute Encoder Position", m_Encoder.getAbsolutePosition());
+    SmartDashboard.putNumber("Alt Encoder Position", m_Encoder.getPosition());
+    SmartDashboard.putBoolean("Encoder Position Conversion", m_Encoder.getInverted());
+    SmartDashboard.putNumber("Alt Encoder Velocity", m_Encoder.getVelocity());
+    SmartDashboard.putNumber("Applied Output", m_RightSwingMotor.getAppliedOutput());
+//      SmartDashboard.putNumber("Absolute Encoder Position", m_Encoder.getAbsolutePosition());
   }
 
   public void swingToPosition(double position) {
     double rotations = degreesToRotation(position);
-//    m_PidController.setReference(rotations, ControlType.kPosition);
+    m_PidController.setReference(rotations, ControlType.kPosition);
   }
 
   public double getPosition() {
-    return m_Encoder.getAbsolutePosition();
+    return m_Encoder.getPosition();
   }
 
   public void move(double speed) {
