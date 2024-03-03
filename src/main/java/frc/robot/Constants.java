@@ -76,12 +76,12 @@ public final class Constants {
     public static final int DIO_PORT = 0;
     public static final int LEFT_SWING_MOTOR = 24;
     public static final int RIGHT_SWING_MOTOR = 25;
-    public static final double DOWN_POSITION = -11.0;
+    public static final double DOWN_POSITION = 0.0;
     public static final double AMP_POSITION = -70.0;
-    public static final double SPEAKER_POSITION = 35.0;
+    public static final double SPEAKER_POSITION = 45.0;
     public static final double SOURCE_POSITION = -100.0;
-    public static final double TRAP_POSITION = -87.0;
-    public static final double SWING_POSITION_TOLERANCE = 5.0;
+    public static final double TRAP_POSITION = -90.0;
+    public static final double SWING_POSITION_TOLERANCE = 2.0;
   }
 
   public static class ClimberConstants {

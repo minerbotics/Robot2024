@@ -38,11 +38,11 @@ public class Swinger extends SubsystemBase {
     m_PidController.setFeedbackDevice(m_Encoder);
 
     // PID coefficients
-    kP = 1;
+    kP = 2;
     kI = 0;
-    kD = 0;
+    kD = 0.1;
     kIz = 0;
-    kFF = 0;
+    kFF = 0.75;
     kMaxOutput = 0.5;
     kMinOutput = -0.5;
 
@@ -67,7 +67,7 @@ public class Swinger extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Alt Encoder Position", this.getPosition());
+    SmartDashboard.putNumber("Alt Encoder Position Degrees", this.getPosition());
     SmartDashboard.putBoolean("Encoder Position Conversion", m_Encoder.getInverted());
     SmartDashboard.putNumber("Alt Encoder Velocity", m_Encoder.getVelocity());
     SmartDashboard.putNumber("Applied Output", m_RightSwingMotor.getAppliedOutput());

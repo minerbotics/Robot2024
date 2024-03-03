@@ -15,7 +15,6 @@ import frc.robot.commands.Intake;
 import frc.robot.commands.ManeuverOn;
 import frc.robot.commands.ManualSwing;
 import frc.robot.commands.Shoot;
-import frc.robot.commands.SpinTopShoot;
 import frc.robot.commands.SwingToPosition;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -24,8 +23,6 @@ import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.Swinger;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.path.GoalEndState;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
