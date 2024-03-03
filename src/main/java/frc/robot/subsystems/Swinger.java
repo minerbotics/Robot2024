@@ -8,8 +8,6 @@ import com.revrobotics.SparkMaxAlternateEncoder;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.SwingConstants;
@@ -20,7 +18,6 @@ public class Swinger extends SubsystemBase {
 
   private CANSparkMax m_LeftSwingMotor, m_RightSwingMotor;
   private SparkPIDController m_PidController;
-//  private DutyCycleEncoder m_Encoder;
   private RelativeEncoder m_Encoder;
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
 
@@ -37,17 +34,17 @@ public class Swinger extends SubsystemBase {
 
     m_PidController = m_RightSwingMotor.getPIDController();
     m_Encoder = m_RightSwingMotor.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, kCPR);
-//    DigitalInput dio = new DigitalInput(SwingConstants.DIO_PORT);
+    m_Encoder.setInverted(true);
     m_PidController.setFeedbackDevice(m_Encoder);
 
     // PID coefficients
-    kP = 0.1;
-    kI = 1e-4;
+    kP = 1;
+    kI = 0;
     kD = 0;
     kIz = 0;
     kFF = 0;
-    kMaxOutput = 1;
-    kMinOutput = -1;
+    kMaxOutput = 0.5;
+    kMinOutput = -0.5;
 
     // set PID coefficients
     m_PidController.setP(kP);
@@ -57,28 +54,58 @@ public class Swinger extends SubsystemBase {
     m_PidController.setFF(kFF);
     m_PidController.setOutputRange(kMinOutput, kMaxOutput);
     
+    // display PID coefficients on SmartDashboard
+    SmartDashboard.putNumber("P Gain", kP);
+    SmartDashboard.putNumber("I Gain", kI);
+    SmartDashboard.putNumber("D Gain", kD);
+    SmartDashboard.putNumber("I Zone", kIz);
+    SmartDashboard.putNumber("Feed Forward", kFF);
+    SmartDashboard.putNumber("Max Output", kMaxOutput);
+    SmartDashboard.putNumber("Min Output", kMinOutput);
+    
   }
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Alt Encoder Position", m_Encoder.getPosition());
+    SmartDashboard.putNumber("Alt Encoder Position", this.getPosition());
     SmartDashboard.putBoolean("Encoder Position Conversion", m_Encoder.getInverted());
     SmartDashboard.putNumber("Alt Encoder Velocity", m_Encoder.getVelocity());
     SmartDashboard.putNumber("Applied Output", m_RightSwingMotor.getAppliedOutput());
-//      SmartDashboard.putNumber("Absolute Encoder Position", m_Encoder.getAbsolutePosition());
+
+    // read PID coefficients from SmartDashboard
+    double p = SmartDashboard.getNumber("P Gain", 0);
+    double i = SmartDashboard.getNumber("I Gain", 0);
+    double d = SmartDashboard.getNumber("D Gain", 0);
+    double iz = SmartDashboard.getNumber("I Zone", 0);
+    double ff = SmartDashboard.getNumber("Feed Forward", 0);
+    double max = SmartDashboard.getNumber("Max Output", 0);
+    double min = SmartDashboard.getNumber("Min Output", 0);
+
+    // if PID coefficients on SmartDashboard have changed, write new values to controller
+    if((p != kP)) { m_PidController.setP(p); kP = p; }
+    if((i != kI)) { m_PidController.setI(i); kI = i; }
+    if((d != kD)) { m_PidController.setD(d); kD = d; }
+    if((iz != kIz)) { m_PidController.setIZone(iz); kIz = iz; }
+    if((ff != kFF)) { m_PidController.setFF(ff); kFF = ff; }
+    if((max != kMaxOutput) || (min != kMinOutput)) { 
+      m_PidController.setOutputRange(min, max); 
+      kMinOutput = min; kMaxOutput = max; 
+    }
   }
 
   public void swingToPosition(double position) {
     double rotations = degreesToRotation(position);
+    SmartDashboard.putNumber("Set Point", rotations);
+    SmartDashboard.putNumber("Set Point Degrees", position);
     m_PidController.setReference(rotations, ControlType.kPosition);
   }
 
   public double getPosition() {
-    return m_Encoder.getPosition();
+    return (m_Encoder.getPosition() * 360);
   }
 
   public void move(double speed) {
-    m_RightSwingMotor.set(speed*0.5);
+    m_RightSwingMotor.set(speed*0.35);
   }
 
   public void stop() {

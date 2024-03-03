@@ -36,7 +36,7 @@ public class SwingToPosition extends Command {
         this.targetPosition = SwingConstants.TRAP_POSITION;
         break;
       default:
-        this.targetPosition = 0;
+        this.targetPosition = SwingConstants.DOWN_POSITION;
         break;
     }
     m_Swinger.swingToPosition(this.targetPosition);
