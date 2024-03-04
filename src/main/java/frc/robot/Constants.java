@@ -99,8 +99,8 @@ public final class Constants {
   }
 
   public static class AutoConstants {
-    public static final PIDConstants TRANSLATION_AUTO_PID = new PIDConstants(1.95, 0, .0001);
-    public static final PIDConstants ROTATION_AUTO_PID = new PIDConstants(20, 0, 0);
+    public static final PIDConstants TRANSLATION_AUTO_PID = new PIDConstants(3, 0, 0);
+    public static final PIDConstants ROTATION_AUTO_PID = new PIDConstants(3, 0, 0);
   }
   
 }
