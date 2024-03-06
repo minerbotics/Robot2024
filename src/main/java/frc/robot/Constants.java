@@ -82,6 +82,7 @@ public final class Constants {
     public static final double SOURCE_POSITION = -100.0;
     public static final double TRAP_POSITION = -90.0;
     public static final double SWING_POSITION_TOLERANCE = 2.0;
+    public static final double SWING_VELOCITY_TOLERANCE = 2.0;
   }
 
   public static class ClimberConstants {

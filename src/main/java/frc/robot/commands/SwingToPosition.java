@@ -45,10 +45,18 @@ public class SwingToPosition extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(m_Swinger.getPosition() - this.targetPosition) <= SwingConstants.SWING_POSITION_TOLERANCE);
+    return (atSetPoint() && !isMoving());
   }
 
   public void end(boolean interrupted) {
     m_Swinger.stop();
+  }
+
+  private boolean atSetPoint() {
+    return (Math.abs(m_Swinger.getPosition() - this.targetPosition) <= SwingConstants.SWING_POSITION_TOLERANCE);
+  }
+
+  private boolean isMoving() {
+    return (Math.abs(m_Swinger.getVelocity()) >= SwingConstants.SWING_VELOCITY_TOLERANCE);
   }
 }

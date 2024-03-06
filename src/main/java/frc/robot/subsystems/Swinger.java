@@ -104,6 +104,10 @@ public class Swinger extends SubsystemBase {
     return (m_Encoder.getPosition() * 360);
   }
 
+  public double getVelocity() {
+    return m_Encoder.getVelocity();
+  }
+
   public void move(double speed) {
     m_RightSwingMotor.set(speed*0.35);
   }
