@@ -45,7 +45,7 @@ public class SwingToPosition extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (atSetPoint() && !isMoving());
+    return (atSetPoint());
   }
 
   public void end(boolean interrupted) {
