@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.GoalTypeConstants;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.AutoDriveForward;
 import frc.robot.commands.ClimberDown;
 import frc.robot.commands.ClimberUp;
 import frc.robot.commands.DefaultDriveCommand;
@@ -46,9 +47,6 @@ public class RobotContainer {
   private final Shooter m_Shooter;
   private final Swinger m_Swinger;
 
-  // Commands
-
-
 
   private final CommandXboxController m_driverController;
   private final CommandXboxController m_OperatorController;
@@ -87,6 +85,7 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
     autoChooser = AutoBuilder.buildAutoChooser();
+    autoChooser.addOption("Basic Drive Forward", new AutoDriveForward(m_Swerve));
 
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
@@ -116,8 +115,8 @@ public class RobotContainer {
     m_driverController.povRight()
       .whileTrue(new DefaultDriveCommand(m_Swerve, () -> 0.0, () -> -0.5, () -> 0.0, true));
 
-      /** Climber commands */
-     m_driverController.y()
+    /** Climber commands */
+    m_driverController.y()
       .onTrue(new ClimberUp(m_Climber));
     m_driverController.a()
       .onTrue(new ClimberDown(m_Climber));
@@ -130,7 +129,7 @@ public class RobotContainer {
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
-   *hi
+   * 
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
