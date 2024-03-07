@@ -55,8 +55,5 @@ public class SwingToPosition extends Command {
   private boolean atSetPoint() {
     return (Math.abs(m_Swinger.getPosition() - this.targetPosition) <= SwingConstants.SWING_POSITION_TOLERANCE);
   }
-
-  private boolean isMoving() {
-    return (Math.abs(m_Swinger.getVelocity()) >= SwingConstants.SWING_VELOCITY_TOLERANCE);
-  }
+  
 }
