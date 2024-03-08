@@ -86,6 +86,7 @@ public class RobotContainer {
     configureBindings();
     autoChooser = AutoBuilder.buildAutoChooser();
     autoChooser.addOption("Basic Drive Forward", new AutoDriveForward(m_Swerve));
+    autoChooser.setDefaultOption("Basic Drive Forward", new AutoDriveForward(m_Swerve));
 
     SmartDashboard.putData("Auto Chooser", autoChooser);
 

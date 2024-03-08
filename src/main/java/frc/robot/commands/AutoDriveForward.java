@@ -10,7 +10,7 @@ public class AutoDriveForward extends SequentialCommandGroup {
     public AutoDriveForward(Swerve drivetrain) {
         m_drivetrain = drivetrain;
         addCommands(
-            new AutoDrive(m_drivetrain, new ChassisSpeeds(0.7, 0, 0)).withTimeout(2),
+            new AutoDrive(m_drivetrain, new ChassisSpeeds(-0.7, 0, 0)).withTimeout(4),
             new AutoDrive(m_drivetrain, new ChassisSpeeds(0, 0, 0))
         );
 
