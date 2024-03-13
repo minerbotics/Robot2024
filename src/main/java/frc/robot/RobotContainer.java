@@ -8,6 +8,7 @@ import frc.robot.Constants.GoalTypeConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AutoAmpScore;
 import frc.robot.commands.AutoDriveForward;
+import frc.robot.commands.AutoSpeakerScore;
 import frc.robot.commands.ClimberDown;
 import frc.robot.commands.ClimberUp;
 import frc.robot.commands.DefaultDriveCommand;
@@ -86,6 +87,7 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
     autoChooser = AutoBuilder.buildAutoChooser();
+    autoChooser.addOption("Score In Speaker", new AutoSpeakerScore(m_Swerve, m_Swinger, m_IntakeSubsystem, m_Shooter));
     autoChooser.addOption("Basic Drive Forward", new AutoDriveForward(m_Swerve));
     autoChooser.setDefaultOption("Score In Amp", new AutoAmpScore(m_Swerve, m_Swinger, m_IntakeSubsystem, m_Shooter));
 
