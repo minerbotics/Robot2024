@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.GoalTypeConstants;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -25,7 +26,8 @@ public class AutoSpeakerScore extends SequentialCommandGroup{
             new SwingToPosition(m_Swinger, GoalTypeConstants.SPEAKER),
             new DoShoot(m_Intake, m_Shooter, GoalTypeConstants.SPEAKER).withTimeout(1),
             new AutoDrive(m_Swerve, new ChassisSpeeds(0, 0, 0.5)).withTimeout(2),
-            new AutoDrive(m_Swerve, new ChassisSpeeds(-0.5, 0, 0)).withTimeout(3)
+            new AutoDrive(m_Swerve, new ChassisSpeeds(-0.5, 0, 0)).withTimeout(3),
+            new InstantCommand(() -> m_Swerve.zeroGyroscope())
         );
     }
 }
