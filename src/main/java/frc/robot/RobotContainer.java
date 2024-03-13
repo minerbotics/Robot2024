@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.GoalTypeConstants;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.AutoAmpScore;
 import frc.robot.commands.AutoDriveForward;
 import frc.robot.commands.ClimberDown;
 import frc.robot.commands.ClimberUp;
@@ -86,7 +87,7 @@ public class RobotContainer {
     configureBindings();
     autoChooser = AutoBuilder.buildAutoChooser();
     autoChooser.addOption("Basic Drive Forward", new AutoDriveForward(m_Swerve));
-    autoChooser.setDefaultOption("Basic Drive Forward", new AutoDriveForward(m_Swerve));
+    autoChooser.setDefaultOption("Score In Amp", new AutoAmpScore(m_Swerve, m_Swinger, m_IntakeSubsystem, m_Shooter));
 
     SmartDashboard.putData("Auto Chooser", autoChooser);
 

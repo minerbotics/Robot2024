@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.GoalTypeConstants;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -21,7 +22,9 @@ public class AutoAmpScore extends SequentialCommandGroup {
         addCommands(
             new ManeuverOn(m_Swerve, GoalTypeConstants.AMP).withTimeout(3),
             new SwingToPosition(m_Swinger, GoalTypeConstants.AMP),
-            new DoShoot(m_Intake, m_Shooter, GoalTypeConstants.AMP)
+            new DoShoot(m_Intake, m_Shooter, GoalTypeConstants.AMP).withTimeout(1),
+            new AutoDrive(m_Swerve, new ChassisSpeeds(0, 0, 0.5)).withTimeout(1),
+            new AutoDrive(m_Swerve, new ChassisSpeeds(-0.5, 0, 0)).withTimeout(3)
         );
     }
 }
