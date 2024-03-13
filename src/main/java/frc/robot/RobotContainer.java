@@ -14,10 +14,10 @@ import frc.robot.commands.ClimberUp;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.DoIntake;
 import frc.robot.commands.DoShoot;
-import frc.robot.commands.Intake;
+import frc.robot.commands.ComboIntake;
 import frc.robot.commands.ManeuverOn;
 import frc.robot.commands.ManualSwing;
-import frc.robot.commands.Shoot;
+import frc.robot.commands.ComboShoot;
 import frc.robot.commands.SwingToPosition;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -165,11 +165,11 @@ public class RobotContainer {
 
   /** Combo Commands (swing -> maneuver -> intake/shoot) */
   private void setOperatorComboCommandBindings() {
-    m_OperatorController.x().whileTrue(new Shoot(m_Swerve, m_Shooter, m_IntakeSubsystem, m_Swinger, GoalTypeConstants.AMP));
-    m_OperatorController.leftBumper().whileTrue(new Intake(m_Swerve, m_IntakeSubsystem, m_Shooter, m_Swinger, GoalTypeConstants.SOURCE_1));
-    m_OperatorController.leftBumper().and(m_OperatorController.rightBumper()).whileTrue(new Intake(m_Swerve, m_IntakeSubsystem, m_Shooter, m_Swinger, GoalTypeConstants.SOURCE_2));
-    m_OperatorController.rightBumper().whileTrue(new Intake(m_Swerve, m_IntakeSubsystem, m_Shooter, m_Swinger, GoalTypeConstants.SOURCE_3));
-    m_OperatorController.y().whileTrue(new Shoot(m_Swerve, m_Shooter, m_IntakeSubsystem, m_Swinger, GoalTypeConstants.SPEAKER));
+    m_OperatorController.x().whileTrue(new ComboShoot(m_Swerve, m_Shooter, m_IntakeSubsystem, m_Swinger, GoalTypeConstants.AMP));
+    m_OperatorController.leftBumper().whileTrue(new ComboIntake(m_Swerve, m_IntakeSubsystem, m_Shooter, m_Swinger, GoalTypeConstants.SOURCE_1));
+    m_OperatorController.leftBumper().and(m_OperatorController.rightBumper()).whileTrue(new ComboIntake(m_Swerve, m_IntakeSubsystem, m_Shooter, m_Swinger, GoalTypeConstants.SOURCE_2));
+    m_OperatorController.rightBumper().whileTrue(new ComboIntake(m_Swerve, m_IntakeSubsystem, m_Shooter, m_Swinger, GoalTypeConstants.SOURCE_3));
+    m_OperatorController.y().whileTrue(new ComboShoot(m_Swerve, m_Shooter, m_IntakeSubsystem, m_Swinger, GoalTypeConstants.SPEAKER));
   }
 
   /** Button Bindings for when PID isn't working and arm movement is manual. */

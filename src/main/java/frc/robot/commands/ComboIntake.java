@@ -1,39 +1,35 @@
 package frc.robot.commands;
 
-import frc.robot.Constants.GoalTypeConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.Swinger;
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class Shoot extends Command {
-  private final Swerve m_Swerve;
-  private final Shooter m_Shooter;
+public class ComboIntake extends Command {
   private final IntakeSubsystem m_Intake;
+  private final Shooter m_Shooter;
+  private final Swerve m_Swerve;
   private final Swinger m_Swinger;
-  private final int m_goalType;
+  private final int m_GoalType;
 
-  public Shoot(Swerve swerve, Shooter shooter, IntakeSubsystem intake, Swinger swinger, int goalType) {
+  public ComboIntake(Swerve swerve, IntakeSubsystem intake, Shooter shooter, Swinger swinger, int goalType) {
     m_Swerve = swerve;
-    m_Shooter = shooter;
     m_Intake = intake;
+    m_Shooter = shooter;
     m_Swinger = swinger;
-    m_goalType = goalType;
-    addRequirements(swerve, shooter, intake, swinger);
+    m_GoalType = goalType;
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(swerve, intake, shooter, swinger);
   }
+
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_goalType != GoalTypeConstants.TRAP) {
-      new SwingToPosition(m_Swinger, m_goalType)
-        .andThen(new ManeuverOn(m_Swerve, m_goalType))
-        .andThen(new DoShoot(m_Intake, m_Shooter, m_goalType));
-    } else {
-      new SwingToPosition(m_Swinger, m_goalType)
-        .andThen(new DoShoot(m_Intake, m_Shooter, m_goalType));
-    }
+    new SwingToPosition(m_Swinger, m_GoalType)
+      .andThen(new ManeuverOn(m_Swerve, m_GoalType))
+      .andThen(new DoIntake(m_Intake, m_Shooter));
   }
 
   // Called once the command ends or is interrupted.
