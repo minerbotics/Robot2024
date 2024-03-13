@@ -7,12 +7,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
-  private final CANSparkMax m_TopShooterMotor, m_MidShooterMotor, m_BottomShooterMotor;
+  private final CANSparkMax m_TopShooterMotor, m_MidShooterMotor, m_BottomShooterMotor,m_TopTopShooterMotor;
 
   public Shooter() {
     m_TopShooterMotor = new CANSparkMax(ShooterConstants.TOP_SHOOTER_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
     m_MidShooterMotor = new CANSparkMax(ShooterConstants.MID_SHOOTER_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
     m_BottomShooterMotor = new CANSparkMax(ShooterConstants.BOTTOM_SHOOTER_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
+    m_TopTopShooterMotor = new CANSparkMax(ShooterConstants.TOP_TOP_SHOOTER_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
   }
 
   public void ampOut() {
@@ -22,6 +23,7 @@ public class Shooter extends SubsystemBase {
 
   public void speakerOut() {
     m_TopShooterMotor.set(-1);
+    m_TopTopShooterMotor.set(-1);
     m_MidShooterMotor.set(-0.25);
     m_BottomShooterMotor.set(-0.25);
   }
@@ -34,11 +36,13 @@ public class Shooter extends SubsystemBase {
 
   public void spinTop() {
     m_TopShooterMotor.set(-1);
+    m_TopTopShooterMotor.set(-1);
   }
 
   public void stop() {
     m_BottomShooterMotor.set(0);
     m_MidShooterMotor.set(0);
     m_TopShooterMotor.set(0);
+    m_TopTopShooterMotor.set(0);
   }
 }
