@@ -35,7 +35,7 @@ public class AutoAmpScore extends SequentialCommandGroup {
             new ManeuverOn(m_Swerve, GoalTypeConstants.AMP).withTimeout(3),
             new SwingToPosition(m_Swinger, GoalTypeConstants.AMP),
             new DoShoot(m_Intake, m_Shooter, GoalTypeConstants.AMP).withTimeout(2),
-            new SwingToPosition(m_Swinger, 0),
+            new SwingToPosition(m_Swinger, 0).withTimeout(2),
             new AutoDrive(m_Swerve, new ChassisSpeeds(0, 0, teamset * 2.0 )).withTimeout(1.15),
             new AutoDrive(m_Swerve, new ChassisSpeeds( -0.5, 0, 0)).withTimeout(3),
             new InstantCommand(() -> m_Swerve.zeroGyroscope())
