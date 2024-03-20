@@ -63,8 +63,8 @@ public final class Constants {
   }
 
   public static class ShooterConstants {
-    public static final int TOP_SHOOTER_MOTOR = 20;
-    public static final int MID_SHOOTER_MOTOR = 21;
+    public static final int MID_SHOOTER_MOTOR = 20;
+    public static final int BOTTOM_SHOOTER_MOTOR = 21;
     public static final int TOP_RIGHT_SHOOTER_MOTOR = 22;
     public static final int TOP_LEFT_SHOOTER_MOTOR = 26;
   }
