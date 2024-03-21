@@ -14,7 +14,7 @@ public class Shooter extends SubsystemBase {
     m_BottomShooterMotor = new CANSparkMax(ShooterConstants.BOTTOM_SHOOTER_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
     m_TopRightShooterMotor = new CANSparkMax(ShooterConstants.TOP_RIGHT_SHOOTER_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
     m_TopLeftShooterMotor = new CANSparkMax(ShooterConstants.TOP_LEFT_SHOOTER_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
-    m_TopRightShooterMotor.follow(m_TopLeftShooterMotor, true);
+    m_TopRightShooterMotor.follow(m_TopLeftShooterMotor, false);
   }
 
   public void ampOut() {
@@ -24,7 +24,7 @@ public class Shooter extends SubsystemBase {
 
   public void speakerOut() {
     m_TopLeftShooterMotor.set(-1);
-    m_MidShooterMotor.set(-0.5);
+    m_MidShooterMotor.set(0.5);
     m_BottomShooterMotor.set(-0.25);
   }
 
