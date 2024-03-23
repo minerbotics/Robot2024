@@ -174,12 +174,14 @@ public class RobotContainer {
 
   /** Button Bindings for when PID isn't working and arm movement is manual. */
   private void setOperatorManualCommandBindings() {
-    // Maneuver on source or amp (their target limelight values are the same)
-    m_OperatorController.a().whileTrue(new ManeuverOn(m_Swerve, GoalTypeConstants.SOURCE_1, false));
+    // Intake
+    m_OperatorController.rightTrigger(0.5).whileTrue(new ManeuverOn(m_Swerve, GoalTypeConstants.SOURCE_1, false));
+    m_OperatorController.leftTrigger(0.5).whileTrue(new ManeuverOn(m_Swerve, GoalTypeConstants.SOURCE_1, false));
     m_OperatorController.leftBumper().whileTrue(new DoIntake(m_IntakeSubsystem, m_Shooter));
     m_OperatorController.rightBumper().whileTrue(new DoIntake(m_IntakeSubsystem, m_Shooter));
     
     // AmpShoot
+    m_OperatorController.a().whileTrue(new ManeuverOn(m_Swerve, GoalTypeConstants.AMP, false));
     m_OperatorController.x().whileTrue(new DoShoot(m_IntakeSubsystem, m_Shooter, GoalTypeConstants.AMP));
 
     // SpeakerShoot

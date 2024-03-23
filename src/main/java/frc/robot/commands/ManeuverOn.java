@@ -41,7 +41,7 @@ public class ManeuverOn extends Command {
       case GoalTypeConstants.AMP:
         txMin = -2;
         txMax = 2;
-        taMin = 4.75;
+        taMin = 5;
         taMax = 6;
         break;
       case GoalTypeConstants.SPEAKER:
