@@ -25,7 +25,7 @@ public class AutoSpeakerScoreLeft extends SequentialCommandGroup{
             new SwingToPosition(m_Swinger, GoalTypeConstants.SPEAKER),
             new DoShoot(m_Intake, m_Shooter, GoalTypeConstants.SPEAKER).withTimeout(1),
             new AutoDrive(m_Swerve, new ChassisSpeeds(0, 0, 0.5)).withTimeout(2),
-            new AutoDrive(m_Swerve, new ChassisSpeeds(-0.5, 0, 0)).withTimeout(3),
+            new AutoDrive(m_Swerve, new ChassisSpeeds(-0.5, 0, 0)).withTimeout(3)
         );
     }
 }
