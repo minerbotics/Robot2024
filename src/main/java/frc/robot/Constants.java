@@ -79,7 +79,7 @@ public final class Constants {
     public static final int RIGHT_SWING_MOTOR = 25;
     public static final double DOWN_POSITION = 0.0;
     public static final double AMP_POSITION = -70.0;
-    public static final double SPEAKER_POSITION = 45.0;
+    public static final double SPEAKER_POSITION = -50.0;
     public static final double SOURCE_POSITION = -100.0;
     public static final double TRAP_POSITION = -90.0;
     public static final double SWING_POSITION_TOLERANCE = 2.0;

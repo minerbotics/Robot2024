@@ -24,13 +24,14 @@ public class AutoAmpScore extends SequentialCommandGroup {
         m_Swinger = swinger;
         m_Intake = intake;
         m_Shooter = shooter;
-        Optional<Alliance> alliance = DriverStation.getAlliance();
+        /*Optional<Alliance> alliance = DriverStation.getAlliance();
         
         if(alliance.get() == DriverStation.Alliance.Red) {
             teamset = -1; 
         } else {
             teamset = 1;
-        }
+        }*/
+        teamset = 1;
         addCommands(
             new ManeuverOn(m_Swerve, GoalTypeConstants.AMP).withTimeout(3),
             new SwingToPosition(m_Swinger, GoalTypeConstants.AMP),
