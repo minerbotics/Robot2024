@@ -79,7 +79,8 @@ public final class Constants {
     public static final int RIGHT_SWING_MOTOR = 25;
     public static final double DOWN_POSITION = 0.0;
     public static final double AMP_POSITION = -70.0;
-    public static final double SPEAKER_POSITION = -50.0;
+    public static final double SPEAKER_POSITION = -35.0;
+    public static final double OFFSET_SPEAKER_POSITION = -40.0;
     public static final double SOURCE_POSITION = -100.0;
     public static final double TRAP_POSITION = -90.0;
     public static final double SWING_POSITION_TOLERANCE = 2.0;
@@ -98,6 +99,7 @@ public final class Constants {
     public static final int SOURCE_2 = 4;
     public static final int SOURCE_3 = 5;
     public static final int TRAP = 6; 
+    public static final int OFFSET_SPEAKER = 7;
   }
 
   public static class AutoConstants {

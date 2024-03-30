@@ -190,7 +190,7 @@ public class RobotContainer {
     m_OperatorController.x().whileTrue(new DoShoot(m_IntakeSubsystem, m_Shooter, GoalTypeConstants.AMP));
 
     // SpeakerShoot
-    m_OperatorController.b().whileTrue(new ManeuverOn(m_Swerve, GoalTypeConstants.SPEAKER, false));
+    m_OperatorController.b().whileTrue(new SwingToPosition(m_Swinger, GoalTypeConstants.OFFSET_SPEAKER));
     m_OperatorController.y().whileTrue(new DoShoot(m_IntakeSubsystem, m_Shooter, GoalTypeConstants.SPEAKER));
 
     // Arm Positions

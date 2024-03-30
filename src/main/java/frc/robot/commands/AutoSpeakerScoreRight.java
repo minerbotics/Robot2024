@@ -21,10 +21,10 @@ public class AutoSpeakerScoreRight extends SequentialCommandGroup{
         m_Intake = intake;
         m_Shooter = shooter;
         addCommands(
-            new SwingToPosition(m_Swinger, GoalTypeConstants.SPEAKER),
+            new SwingToPosition(m_Swinger, GoalTypeConstants.OFFSET_SPEAKER),
             new DoShoot(m_Intake, m_Shooter, GoalTypeConstants.SPEAKER).withTimeout(1),
             new AutoDrive(m_Swerve, new ChassisSpeeds(0, 0, 0.5)).withTimeout(2),
-            new AutoDrive(m_Swerve, new ChassisSpeeds(-0.5, 0, 0)).withTimeout(3)
+            new AutoDrive(m_Swerve, new ChassisSpeeds(-0.75, 0, 0)).withTimeout(5)
         );
     }
 }

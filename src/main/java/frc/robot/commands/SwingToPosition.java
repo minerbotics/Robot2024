@@ -35,6 +35,9 @@ public class SwingToPosition extends Command {
       case GoalTypeConstants.TRAP:
         this.targetPosition = SwingConstants.TRAP_POSITION;
         break;
+      case GoalTypeConstants.OFFSET_SPEAKER:
+        this.targetPosition = SwingConstants.OFFSET_SPEAKER_POSITION;
+        break;
       default:
         this.targetPosition = SwingConstants.DOWN_POSITION;
         break;
